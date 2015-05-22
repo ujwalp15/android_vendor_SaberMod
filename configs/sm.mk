@@ -17,7 +17,7 @@
 # TARGET_SM_AND and TARGET_SM_KERNEL can be set before this file, to override the default of gcc 4.9 for ROM.
 # This is to avoid hardcoding the gcc versions for the ROM and kernels.
 
-# Inherit sabermod configs.  Default to arm if TARGET_ARCH is not defined.
+# Inherit sabermod configs.  Default to arm if LOCAL_ARCH is not defined.
 
 ifndef TARGET_SM_AND
   $(warning ********************************************************************************)
@@ -47,10 +47,16 @@ ifeq ($(strip $(UNAME)),Linux)
   HOST_OS := linux
 endif
 
-local ARCH := $(get_build_var TARGET_ARCH)
+ifndef LOCAL_ARCH
+  $(warning ********************************************************************************)
+  $(warning *  Can not determine arch type, defaulting to arm)
+  $(warning *  To change this set LOCAL_ARCH :=)
+  $(warning ********************************************************************************)
+  LOCAL_ARCH := arm
+endif
 
 # Enable SaberMod ARM Mode for all arm builds.
-ifneq ($(filter arm arm64,$(ARCH)),)
+ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
   ENABLE_SABERMOD_ARM_MODE := true
 endif
 
@@ -63,7 +69,7 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
   OPT4 := (saber-mode)
 endif
 
-ifeq ($(strip $(ARCH)),arm)
+ifeq ($(strip $(LOCAL_ARCH)),arm)
 
   # Strict aliasing
   ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
@@ -72,7 +78,7 @@ ifeq ($(strip $(ARCH)),arm)
   endif
 endif
 
-ifeq ($(strip $(ARCH)),arm64)
+ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
   # Strict aliasing
   ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
@@ -84,8 +90,8 @@ endif
 # Only use these compilers on linux host and arm targets.
 
 ifeq ($(strip $(HOST_OS)),linux)
-  ifneq ($(filter arm arm64,$(ARCH)),)
-    ifeq ($(strip $(ARCH)),arm)
+  ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
+    ifeq ($(strip $(LOCAL_ARCH)),arm)
 
 export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_SM_AND)/lib
 
@@ -181,7 +187,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       endif
     endif
 
-    ifeq ($(strip $(ARCH)),arm64)
+    ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
 export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-linux-android-$(TARGET_SM_AND)/lib
 
@@ -551,7 +557,7 @@ endif
 
 OPT3 := (extra)
 OPT6 := (memory-sanitizer)
-Opt7 := (OpenMP)
+OPT7 := (OpenMP)
 
 GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT4)$(OPT5)$(OPT6)$(OPT7)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)

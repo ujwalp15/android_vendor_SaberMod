@@ -26,6 +26,6 @@ $(shell unset ENABLE_PTHREAD)
 $(shell unset TARGET_SM_AND)
 $(shell unset TARGET_ARCH_LIB_PATH)
 
-ifeq (%hammerhead,$(TARGET_PRODUCT))
+ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   $(shell unset CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING)
 endif
