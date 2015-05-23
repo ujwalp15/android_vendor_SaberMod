@@ -13,6 +13,10 @@
 # limitations under the License.
 #
 
+ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
+  include $(SM_VENDOR)/products/sm_flounder.mk
+endif
+
 ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/products/sm_hammerhead.mk
 endif
