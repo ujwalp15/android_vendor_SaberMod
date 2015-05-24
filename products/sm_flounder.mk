@@ -26,15 +26,7 @@ GRAPHITE_KERNEL_FLAGS := \
   -ftree-parallelize-loops=$(PRODUCT_THREADS) \
   -fopenmp
 
-GRAPHITE_FLAGS := \
-  -floop-parallelize-all \
-  -ftree-parallelize-loops=$(PRODUCT_THREADS)
-
-LOCAL_DISABLE_GRAPHITE += \
-  libpdfiumcore \
-  libc_netbsd
-
-# Do not enable pthread when graphite flags are set to handle threads
+# Do not enable pthread when OpenMP is set to handle threads
 export ENABLE_PTHREAD := false
 
 # Extra SaberMod GCC C flags for arch target and Kernel
