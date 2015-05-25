@@ -15,12 +15,15 @@
 
 ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/products/sm_flounder.mk
+  LOCAL_ARCH := arm64
 endif
 
 ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/products/sm_hammerhead.mk
+  LOCAL_ARCH := arm
 endif
 
 ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/products/sm_mako.mk
+  LOCAL_ARCH := arm
 endif
