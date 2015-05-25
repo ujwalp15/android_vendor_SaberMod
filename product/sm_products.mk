@@ -13,7 +13,15 @@
 # limitations under the License.
 #
 
-include $(SM_VENDOR)/configs/clear_vars.mk
-include $(SM_VENDOR)/product/sm_products.mk
-include $(SM_VENDOR)/device/sm_devices.mk
-include $(SM_VENDOR)/configs/sm.mk
+ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := flounder
+endif
+
+ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := hammerhead
+endif
+
+ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := mako
+endif
+

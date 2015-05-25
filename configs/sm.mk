@@ -20,20 +20,20 @@
 # Inherit sabermod configs.  Default to arm if LOCAL_ARCH is not defined.
 
 ifndef TARGET_SM_AND
-  $(info =====================================================================)
-  $(info TARGET_SM_AND not defined.)
-  $(info Defaulting to gcc 4.9 for ROM.)
-  $(info =====================================================================)
+  $(warning =====================================================================)
+  $(warning TARGET_SM_AND not defined.)
+  $(warning Defaulting to gcc 4.9 for ROM.)
+  $(warning =====================================================================)
   export TARGET_SM_AND := 4.9
 endif
 
 ifdef TARGET_SM_KERNEL
   TARGET_SM_KERNEL_DEFINED := true
 else
-  $(info =====================================================================)
-  $(info *  TARGET_SM_KERNEL not defined.)
-  $(info *  Defaulting to ROM gcc version $(TARGET_SM_AND).)
-  $(info =====================================================================)
+  $(warning =====================================================================)
+  $(warning TARGET_SM_KERNEL not defined.)
+  $(warning Defaulting to ROM gcc version $(TARGET_SM_AND).)
+  $(warning =====================================================================)
   TARGET_SM_KERNEL := $(TARGET_SM_AND)
 endif
 
@@ -48,11 +48,11 @@ ifeq ($(strip $(UNAME)),Linux)
 endif
 
 ifndef LOCAL_ARCH
-  $(info =====================================================================)
-  $(info Can not determine arch type, defaulting to arm)
-  $(info  To change this set LOCAL_ARCH :=)
-  $(info =====================================================================)
-  $(shell LOCAL_ARCH=arm)
+  $(warning =====================================================================)
+  $(warning Can not determine arch type, defaulting to arm)
+  $(warning  To change this set LOCAL_ARCH :=)
+  $(warning =====================================================================)
+  LOCAL_ARCH := arm
 endif
 
 # Enable SaberMod ARM Mode for all arm builds.
