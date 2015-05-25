@@ -68,10 +68,12 @@ endif
 ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
   ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
     ifneq ($(strip $(LOCAL_CLANG)),true)
-      ifdef LOCAL_CONLYFLAGS
-        LOCAL_CONLYFLAGS += -fsanitize=leak
-      else
-        LOCAL_CONLYFLAGS := -fsanitize=leak
+      ifneq (1,$(words $(DISABLE_SANITIZE_LEAK)))
+        ifdef LOCAL_CONLYFLAGS
+          LOCAL_CONLYFLAGS += -fsanitize=leak
+        else
+          LOCAL_CONLYFLAGS := -fsanitize=leak
+        endif
       endif
       ifneq (1,$(words $(filter libwebviewchromium libc_netbsd,$(LOCAL_MODULE))))
         ifdef LOCAL_CFLAGS

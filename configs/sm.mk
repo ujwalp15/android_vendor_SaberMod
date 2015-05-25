@@ -403,7 +403,9 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     libldnhncr \
     libqcomvisualizer \
     libvisualizer \
-    libandroidfw
+    libandroidfw \
+    libstlport_static \
+    tcpdump
 
   # Check if there's already something set in a device make file somewhere.
   ifndef LOCAL_DISABLE_STRICT_ALIASING
@@ -554,6 +556,9 @@ ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS
 else
   LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS += $(LOCAL_BLUETOOTH_BLUEDROID)
 endif
+
+# Some flags are only available for certain gcc versions
+export DISABLE_SANITIZE_LEAK := $(filter 4.8.x-sabermod,$(SM_AND))
 
 OPT3 := (extra)
 OPT6 := (memory-sanitizer)
