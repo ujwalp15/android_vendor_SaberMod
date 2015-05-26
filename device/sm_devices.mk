@@ -28,3 +28,11 @@ ifneq ($(filter mako,$(TARGET_DEVICE)),)
   LOCAL_ARCH := arm
 endif
 
+ifeq ($(strip $(LOCAL_ARCH)),arm)
+TARGET_KERNEL_TOOLS_PREFIX := arm-linux-gnueabi-
+endif
+
+ifeq ($(strip $(LOCAL_ARCH)),arm64)
+TARGET_KERNEL_TOOLS_PREFIX := aarch64-linux-gnu-
+endif
+

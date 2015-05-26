@@ -19,22 +19,24 @@
 
 # Inherit sabermod configs.  Default to arm if LOCAL_ARCH is not defined.
 
-ifndef TARGET_SM_AND
+ifdef TARGET_SM_AND
+export TARGET_SM_AND := $(TARGET_SM_AND)
+else
   $(warning =====================================================================)
   $(warning TARGET_SM_AND not defined.)
   $(warning Defaulting to gcc 4.9 for ROM.)
   $(warning =====================================================================)
-  export TARGET_SM_AND := 4.9
+export TARGET_SM_AND := 4.9
 endif
 
 ifdef TARGET_SM_KERNEL
-  TARGET_SM_KERNEL_DEFINED := true
+  export TARGET_SM_KERNEL := $(TARGET_SM_KERNEL)
 else
   $(warning =====================================================================)
   $(warning TARGET_SM_KERNEL not defined.)
   $(warning Defaulting to ROM gcc version $(TARGET_SM_AND).)
   $(warning =====================================================================)
-  TARGET_SM_KERNEL := $(TARGET_SM_AND)
+  export TARGET_SM_KERNEL := $(TARGET_SM_AND)
 endif
 
 # Set GCC colors
@@ -147,7 +149,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       SM_KERNEL := $(shell $(SM_KERNEL_PATH)/bin/arm-eabi-gcc --version)
 
       ifneq ($(filter %sabermod,$(SM_KERNEL)),)
-        SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
+ export SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
         SM_KERNEL_DATE := $(filter 20140% 20141% 20150% 20151%,$(SM_KERNEL))
         SM_KERNEL_STATUS := $(filter (release) (prerelease) (experimental),$(SM_KERNEL))
         SM_KERNEL_VERSION := $(SM_KERNEL_NAME)-$(SM_KERNEL_DATE)-$(SM_KERNEL_STATUS)
@@ -158,7 +160,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           # Graphite flags for kernel
 
           # Some graphite flags are only available for certain gcc versions
-   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL))
+   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
 
           BASE_GRAPHITE_KERNEL_FLAGS := \
             -fgraphite \
@@ -243,7 +245,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       SM_KERNEL := $(shell $(SM_KERNEL_PATH)/bin/aarch64-gcc --version)
 
       ifneq ($(filter %sabermod,$(SM_KERNEL)),)
-        SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
+ export SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
         SM_KERNEL_DATE := $(filter 20140% 20141% 20150% 20151%,$(SM_KERNEL))
         SM_KERNEL_STATUS := $(filter (release) (prerelease) (experimental),$(SM_KERNEL))
         SM_KERNEL_VERSION := $(SM_KERNEL_NAME)-$(SM_KERNEL_DATE)-$(SM_KERNEL_STATUS)
@@ -255,7 +257,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           # Graphite flags for kernel
 
           # Some graphite flags are only available for certain gcc versions
-   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL))
+   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
 
           BASE_GRAPHITE_KERNEL_FLAGS := \
             -fgraphite \
@@ -328,10 +330,10 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
     endif
   endif
 else
-    $(warning ********************************************************************************)
-    $(warning *  Limited optimization options are available outside of linux host OS.)
-    $(warning *  To take advantage of all optimization options, build on linux host OS.)
-    $(warning ********************************************************************************)
+    $(warning ========================================================================)
+    $(warning   Limited optimization options are available outside of linux host OS.)
+    $(warning   To take advantage of all optimization options, build on linux host OS.)
+    $(warning ========================================================================)
 endif
 
 # strict-aliasing

@@ -25,7 +25,14 @@ $(shell unset LIBRARY_PATH)
 $(shell unset ENABLE_PTHREAD)
 $(shell unset TARGET_SM_AND)
 $(shell unset TARGET_ARCH_LIB_PATH)
+$(shell unset TARGET_SM_KERNEL)
+$(shell unset SM_KERNEL_NAME)
+$(shell unset TARGET_KERNEL_TOOLS_PREFIX)
 
 ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   $(shell unset CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8960_MAKO_STRICT_ALIASING)
 endif

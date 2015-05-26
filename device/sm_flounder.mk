@@ -13,16 +13,28 @@
 # limitations under the License.
 #
 
-O3_OPTIMIZATIONS := true
-TARGET_SM_KERNEL := 5.1
-TARGET_SM_AND := 4.9
-FLOUNDER_THREADS:= 2
-PRODUCT_THREADS := $(FLOUNDER_THREADS)
+# Find host os
+UNAME := $(shell uname -s)
 
-GRAPHITE_KERNEL_FLAGS := \
-  -floop-parallelize-all \
-  -ftree-parallelize-loops=$(PRODUCT_THREADS) \
-  -fopenmp
+ifeq ($(strip $(UNAME)),Linux)
+  HOST_OS := linux
+endif
+
+# Only use these compilers on linux host.
+ifeq ($(strip $(HOST_OS)),linux)
+
+  # Sabermod configs
+  O3_OPTIMIZATIONS := true
+  TARGET_SM_KERNEL := 5.1
+  TARGET_SM_AND := 4.9
+  FLOUNDER_THREADS:= 2
+  PRODUCT_THREADS := $(FLOUNDER_THREADS)
+
+  GRAPHITE_KERNEL_FLAGS := \
+    -floop-parallelize-all \
+    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
+    -fopenmp
+endif
 
 # Do not enable pthread when OpenMP is set to handle threads
 export ENABLE_PTHREAD := false
