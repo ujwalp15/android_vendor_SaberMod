@@ -16,6 +16,9 @@ $(info =====================================================================)
 ifdef TARGET_DEVICE
 $(info   TARGET_DEVICE=$(TARGET_DEVICE))
 endif
+ifdef TARGET_ROM
+$(info   TARGET_ROM=$(TARGET_ROM))
+endif
 ifdef SM_AND_NAME
 $(info   TARGET_SABERMOD_ANDROID_GCC_VERSION=$(SM_AND_NAME))
 endif

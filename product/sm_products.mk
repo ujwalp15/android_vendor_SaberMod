@@ -25,3 +25,15 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := mako
 endif
 
+ifneq ($(filter pa%,$(TARGET_PRODUCT)),)
+  TARGET_ROM := pa
+endif
+
+ifneq ($(filter cm%,$(TARGET_PRODUCT)),)
+  TARGET_ROM := cm
+endif
+
+ifneq ($(filter slim%,$(TARGET_PRODUCT)),)
+  TARGET_ROM := slim
+endif
+
