@@ -13,6 +13,9 @@
 # limitations under the License.
 
 $(info =====================================================================)
+ifdef TARGET_DEVICE
+$(info   TARGET_DEVICE=$(TARGET_DEVICE))
+endif
 ifdef SM_AND_NAME
 $(info   TARGET_SABERMOD_ANDROID_GCC_VERSION=$(SM_AND_NAME))
 endif
