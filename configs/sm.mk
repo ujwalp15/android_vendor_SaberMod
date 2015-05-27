@@ -130,7 +130,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -floop-strip-mine \
             -floop-block
 
-          # Check if there's already something set in a device make file somewhere.
+          # Check if there's already something set somewhere.
           ifndef GRAPHITE_FLAGS
             GRAPHITE_FLAGS := \
               $(BASE_GRAPHITE_FLAGS)
@@ -179,7 +179,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
               -floop-unroll-and-jam
           endif
 
-          # Check if there's already something set in a device make file somewhere.
+          # Check if there's already something set somewhere.
           ifndef GRAPHITE_KERNEL_FLAGS
      export GRAPHITE_KERNEL_FLAGS := \
               $(BASE_GRAPHITE_KERNEL_FLAGS)
@@ -226,7 +226,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -floop-strip-mine \
             -floop-block
 
-          # Check if there's already something set in a device make file somewhere.
+          # Check if there's already something set somewhere.
           ifndef GRAPHITE_FLAGS
             GRAPHITE_FLAGS := \
               $(BASE_GRAPHITE_FLAGS)
@@ -276,7 +276,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
               -floop-unroll-and-jam
           endif
 
-          # Check if there's already something set in a device make file somewhere.
+          # Check if there's already something set somewhere.
           ifndef GRAPHITE_KERNEL_FLAGS
      export GRAPHITE_KERNEL_FLAGS := \
               $(BASE_GRAPHITE_KERNEL_FLAGS)
@@ -297,7 +297,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
 
     ifneq ($(GRAPHITE_FLAGS),)
       # Force disable some modules that are not compatible with graphite flags.
-      # Add more modules if needed for devices in a device make file somewhere with
+      # Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
       # LOCAL_DISABLE_GRAPHITE:=
 
       LOCAL_BASE_DISABLE_GRAPHITE := \
@@ -322,7 +322,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         fio \
         libpdfiumcore
 
-      # Check if there's already something set in a device make file somewhere.
+      # Check if there's already something set somewhere.
       ifndef LOCAL_DISABLE_GRAPHITE
         LOCAL_DISABLE_GRAPHITE := \
           $(LOCAL_BASE_DISABLE_GRAPHITE)
@@ -412,7 +412,7 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     libstlport_static \
     tcpdump
 
-  # Check if there's already something set in a device make file somewhere.
+  # Check if there's already something somewhere.
   ifndef LOCAL_DISABLE_STRICT_ALIASING
     LOCAL_DISABLE_STRICT_ALIASING := \
       $(LOCAL_BASE_DISABLE_STRICT_ALIASING)
@@ -427,10 +427,10 @@ endif
 
 # General flags for gcc 4.9 to allow compilation to complete.
 # Commented out for now since there's no common (non-device specific) modules to list here.
-# Add more modules if needed for devices in a device make file somewhere with
+# Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
 # MAYBE_UNINITIALIZED :=
 
-# Check if there's already something set in a device make file somewhere.
+# Check if there's already something set somewhere.
 ifndef MAYBE_UNINITIALIZED
   MAYBE_UNINITIALIZED := \
     fastboot
@@ -465,10 +465,10 @@ ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
   OPT2 := (max)
 
   # Disable some modules that break with -O3
-  # Add more modules if needed for devices in a device make file somewhere with
+  # Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
   # LOCAL_DISABLE_O3 :=
 
-  # Check if there's already something set in a device make file somewhere.
+  # Check if there's already something set somewhere.
   ifndef LOCAL_DISABLE_O3
     LOCAL_DISABLE_O3 := \
       libaudioflinger \
@@ -510,7 +510,7 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
   # The LOCAL_COMPILERS_WHITELIST will allow modules that absolutely have to be complied with thumb instructions,
   # or the clang compiler, to skip replacing the default overrides.
 
-  LOCAL_ARM_COMPILERS_WHITELIST := \
+  LOCAL_ARM_COMPILERS_WHITELIST_BASE := \
     libmincrypt \
     libc++abi \
     libjni_latinime_common_static \
@@ -524,7 +524,7 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
     libRSDriver \
     $(LOCAL_BLUETOOTH_BLUEDROID)
 
-  LOCAL_ARM64_COMPILERS_WHITELIST := \
+  LOCAL_ARM64_COMPILERS_WHITELIST_BASE := \
     libc++abi \
     libcompiler_rt \
     libnativebridge \
@@ -536,6 +536,22 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
     libRSDriver \
     libjpeg \
     $(LOCAL_BLUETOOTH_BLUEDROID)
+
+  # Check if there's already something set somewhere.
+  ifndef LOCAL_ARM_COMPILERS_WHITELIST
+    LOCAL_ARM_COMPILERS_WHITELIST := \
+      $(LOCAL_ARM_COMPILERS_WHITELIST_BASE)
+  else
+    LOCAL_ARM_COMPILERS_WHITELIST += \
+      $(LOCAL_ARM_COMPILERS_WHITELIST_BASE)
+  endif
+  ifndef LOCAL_ARM64_COMPILERS_WHITELIST
+    LOCAL_ARM64_COMPILERS_WHITELIST := \
+      $(LOCAL_ARM64_COMPILERS_WHITELIST_BASE)
+  else
+    LOCAL_ARM64_COMPILERS_WHITELIST += \
+      $(LOCAL_ARM64_COMPILERS_WHITELIST_BASE)
+  endif
 endif
 
 # Enable some basic host gcc optimizations
@@ -548,14 +564,14 @@ EXTRA_SABERMOD_HOST_GCC_CFLAGS := \
 EXTRA_SABERMOD_CLANG_CFLAGS := \
   -ftree-vectorize
 
-# Check if there's already something set in a device make file somewhere.
+# Check if there's already something set somewhere.
 ifndef LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS
   LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS := $(LOCAL_BLUETOOTH_BLUEDROID)
 else
   LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS += $(LOCAL_BLUETOOTH_BLUEDROID)
 endif
 
-# Check if there's already something set in a device make file somewhere.
+# Check if there's already something set somewhere.
 ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS
   LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS := $(LOCAL_BLUETOOTH_BLUEDROID)
 else
