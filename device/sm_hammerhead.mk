@@ -45,10 +45,6 @@ export EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS := \
          -mvectorize-with-neon-quad
 
 ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
-  # strict-aliasing kernel flags
-  export KERNEL_STRICT_FLAGS := \
-           -fstrict-aliasing \
-           -Werror=strict-aliasing
 
   # Enable strict-aliasing kernel flags
 export CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING := y

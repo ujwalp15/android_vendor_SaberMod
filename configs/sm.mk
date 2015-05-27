@@ -189,6 +189,13 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
               $(GRAPHITE_KERNEL_FLAGS)
           endif
         endif
+        ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+
+          # strict-aliasing kernel flags
+   export KERNEL_STRICT_FLAGS := \
+            -fstrict-aliasing \
+            -Werror=strict-aliasing
+        endif
       endif
     endif
 
@@ -285,6 +292,13 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
               $(BASE_GRAPHITE_KERNEL_FLAGS) \
               $(GRAPHITE_KERNEL_FLAGS)
           endif
+        endif
+        ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+
+          # strict-aliasing kernel flags
+   export KERNEL_STRICT_FLAGS := \
+            -fstrict-aliasing \
+            -Werror=strict-aliasing
         endif
       endif
     endif

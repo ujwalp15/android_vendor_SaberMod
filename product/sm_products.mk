@@ -13,6 +13,7 @@
 # limitations under the License.
 #
 
+# Filter device
 ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := flounder
 endif
@@ -25,6 +26,7 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := mako
 endif
 
+# Filter ROM base
 ifneq ($(filter aosp pa%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
