@@ -13,4 +13,4 @@
 # limitations under the License.
 #
 
-
+TARGET_SM_AND := 4.9

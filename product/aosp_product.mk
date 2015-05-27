@@ -12,3 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+TARGET_SM_AND := 4.9
