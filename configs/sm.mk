@@ -89,6 +89,9 @@ ifeq ($(strip $(LOCAL_ARCH)),arm64)
   endif
 endif
 
+# Turn debugging off for all builds.
+FORCE_DISABLE_DEBUGGING := true
+
 # Only use these compilers on linux host and arm targets.
 
 ifeq ($(strip $(HOST_OS)),linux)
