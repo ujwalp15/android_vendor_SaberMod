@@ -13,4 +13,6 @@
 # limitations under the License.
 #
 
+# Android ROM toolchain.
+# This can still be overridden in device/sm_device.mk
 TARGET_SM_AND := 4.9
