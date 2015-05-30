@@ -14,9 +14,29 @@
 # limitations under the License.
 ##########################################################################
 
+# arm mode
 include $(SM_VENDOR)/build/arm.mk
 
-include $(SM_VENDOR)/build/O3.mk
+# O3 optimzations
+ifeq ($(strip $(LOCAL_O3)),true)
+  ifneq ($(strip $(LOCAL_ARM_MODE))-$(strip $(LOCAL_DISABLE_O3_THUMB)),thumb-true)
+    ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3),$(LOCAL_MODULE))))
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += $(O3_FLAGS)
+      else
+        LOCAL_CFLAGS := $(O3_FLAGS)
+      endif
+    else
+      ifneq (1,$(words $(filter $(NO_OPTIMIZATIONS),$(LOCAL_MODULE))))
+        ifdef LOCAL_CFLAGS
+          LOCAL_CFLAGS += -O2
+        else
+          LOCAL_CFLAGS := -O2
+        endif
+      endif
+    endif
+  endif
+endif
 
 # Extra sabermod variables
 include $(SM_VENDOR)/build/extra.mk
@@ -26,20 +46,18 @@ include $(SM_VENDOR)/build/extra.mk
 ifeq ($(HOST_OS),linux)
   ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
     ifneq ($(strip $(LOCAL_CLANG)),true)
-      ifeq ($(strip $(LOCAL_O3_OPTIMIZATIONS_MODE)),on)
 
-        # If it gets this far enable graphite by default from here on out.
-        ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
-          ifdef LOCAL_CFLAGS
-            LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
-          else
-            LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
-          endif
-          ifdef LOCAL_LDFLAGS
-            LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
-          else
-            LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
-          endif
+      # If it gets this far enable graphite by default from here on out.
+      ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
+        ifdef LOCAL_CFLAGS
+          LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
+        else
+          LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
+        endif
+        ifdef LOCAL_LDFLAGS
+          LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
+        else
+          LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
         endif
       endif
     endif
@@ -48,7 +66,7 @@ endif
 
 # General flags for gcc 4.9 to allow compilation to complete.
 # Many of these are device specific and should be set in device make files.
-# See vendor or device trees for more info.  Add more sections below and to vendor/name/configs/sm.mk if need be.
+# See vendor/sm.  Add more sections below and to vendor/sm/device/sm_device.mk if need be.
 
 # modules that need -Wno-error=maybe-uninitialized
 ifdef MAYBE_UNINITIALIZED

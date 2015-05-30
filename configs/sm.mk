@@ -62,11 +62,6 @@ ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
   ENABLE_SABERMOD_ARM_MODE := true
 endif
 
-# Enable -O3 for all builds.
-ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
-export O3_OPTIMIZATIONS := true
-endif
-
 ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
   OPT4 := (saber-mode)
 endif
@@ -75,8 +70,8 @@ ifeq ($(strip $(LOCAL_ARCH)),arm)
 
   # Strict aliasing
   ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
-    GCC_STRICT_CFLAGS := -Wstrict-aliasing=3 -Werror=strict-aliasing
-    CLANG_STRICT_CFLAGS := -Wstrict-aliasing=2 -Werror=strict-aliasing
+    GCC_STRICT_FLAGS := -Wstrict-aliasing=3 -Werror=strict-aliasing
+    CLANG_STRICT_FLAGS := -Wstrict-aliasing=2 -Werror=strict-aliasing
   endif
 endif
 
@@ -84,8 +79,8 @@ ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
   # Strict aliasing
   ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
-    GCC_STRICT_CFLAGS := -fstrict-aliasing -Wstrict-aliasing=3 -Werror=strict-aliasing
-    CLANG_STRICT_CFLAGS := -fstrict-aliasing -Wstrict-aliasing=2 -Werror=strict-aliasing
+    GCC_STRICT_FLAGS := -fstrict-aliasing -Wstrict-aliasing=3 -Werror=strict-aliasing
+    CLANG_STRICT_FLAGS := -fstrict-aliasing -Wstrict-aliasing=2 -Werror=strict-aliasing
   endif
 endif
 
@@ -115,35 +110,33 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         PRODUCT_PROPERTY_OVERRIDES += \
           ro.sm.android=$(SM_AND_VERSION)
 
-        # Make dependent on -O3 optimizations.
-        # These are extra loop optmizations, that act as helpers for -O3 and other loop optimization flags.
-        ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
-          OPT1 := (graphite)
+        
+        # Graphite ROM flags
+        OPT1 := (graphite)
 
-          # Graphite flags and friends
-          BASE_GRAPHITE_FLAGS := \
-            -fgraphite \
-            -fgraphite-identity \
-            -floop-flatten \
-            -ftree-loop-linear \
-            -floop-interchange \
-            -floop-strip-mine \
-            -floop-block
+        # Graphite flags and friends
+        BASE_GRAPHITE_FLAGS := \
+          -fgraphite \
+          -fgraphite-identity \
+          -floop-flatten \
+          -ftree-loop-linear \
+          -floop-interchange \
+          -floop-strip-mine \
+          -floop-block
 
-          # Check if there's already something set somewhere.
-          ifndef GRAPHITE_FLAGS
-            GRAPHITE_FLAGS := \
-              $(BASE_GRAPHITE_FLAGS)
-          else
-            GRAPHITE_FLAGS += \
-              $(BASE_GRAPHITE_FLAGS)
-          endif
+        # Check if there's already something set somewhere.
+        ifndef GRAPHITE_FLAGS
+          GRAPHITE_FLAGS := \
+            $(BASE_GRAPHITE_FLAGS)
+        else
+          GRAPHITE_FLAGS += \
+            $(BASE_GRAPHITE_FLAGS)
+        endif
 
-          # Legacy gcc doesn't understand this flag
-          ifneq ($(strip $(USE_LEGACY_GCC)),true)
-            GRAPHITE_FLAGS += \
-              -Wno-error=maybe-uninitialized
-          endif
+        # Legacy gcc doesn't understand this flag
+        ifneq ($(strip $(USE_LEGACY_GCC)),true)
+          GRAPHITE_FLAGS += \
+            -Wno-error=maybe-uninitialized
         endif
       endif
 
@@ -157,37 +150,33 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         SM_KERNEL_STATUS := $(filter (release) (prerelease) (experimental),$(SM_KERNEL))
         SM_KERNEL_VERSION := $(SM_KERNEL_NAME)-$(SM_KERNEL_DATE)-$(SM_KERNEL_STATUS)
 
-        # Make dependent on -O3 optimizations.
-        # These are extra loop optmizations, that act as helpers for -O3 and other loop optimization flags.
-        ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
-          # Graphite flags for kernel
+        # Graphite flags for kernel
 
-          # Some graphite flags are only available for certain gcc versions
-   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
+        # Some graphite flags are only available for certain gcc versions
+ export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
 
-          BASE_GRAPHITE_KERNEL_FLAGS := \
-            -fgraphite \
-            -fgraphite-identity \
-            -floop-flatten \
-            -ftree-loop-linear \
-            -floop-interchange \
-            -floop-strip-mine \
-            -floop-block \
-            -floop-nest-optimize
-          ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
-            BASE_GRAPHITE_KERNEL_FLAGS += \
-              -floop-unroll-and-jam
-          endif
+        BASE_GRAPHITE_KERNEL_FLAGS := \
+          -fgraphite \
+          -fgraphite-identity \
+          -floop-flatten \
+          -ftree-loop-linear \
+          -floop-interchange \
+          -floop-strip-mine \
+          -floop-block \
+          -floop-nest-optimize
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+          BASE_GRAPHITE_KERNEL_FLAGS += \
+            -floop-unroll-and-jam
+        endif
 
-          # Check if there's already something set somewhere.
-          ifndef GRAPHITE_KERNEL_FLAGS
-     export GRAPHITE_KERNEL_FLAGS := \
-              $(BASE_GRAPHITE_KERNEL_FLAGS)
-          else
-     export GRAPHITE_KERNEL_FLAGS := \
-              $(BASE_GRAPHITE_KERNEL_FLAGS) \
-              $(GRAPHITE_KERNEL_FLAGS)
-          endif
+        # Check if there's already something set somewhere.
+        ifndef GRAPHITE_KERNEL_FLAGS
+   export GRAPHITE_KERNEL_FLAGS := \
+            $(BASE_GRAPHITE_KERNEL_FLAGS)
+        else
+   export GRAPHITE_KERNEL_FLAGS := \
+            $(BASE_GRAPHITE_KERNEL_FLAGS) \
+            $(GRAPHITE_KERNEL_FLAGS)
         endif
         ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
@@ -218,38 +207,35 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         PRODUCT_PROPERTY_OVERRIDES += \
           ro.sm.android=$(SM_AND_VERSION)
 
-        # Make dependent on -O3 optimizations.
-        # These are extra loop optmizations, that act as helpers for -O3 and other loop optimization flags.
-        ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
-          OPT1 := (graphite)
+        # Graphite ROM flags
+        OPT1 := (graphite)
 
-          # Graphite flags and friends
-          BASE_GRAPHITE_FLAGS := \
-            -fgraphite \
-            -fgraphite-identity \
-            -floop-flatten \
-            -ftree-loop-linear \
-            -floop-interchange \
-            -floop-strip-mine \
-            -floop-block
+        # Graphite flags and friends
+        BASE_GRAPHITE_FLAGS := \
+          -fgraphite \
+          -fgraphite-identity \
+          -floop-flatten \
+          -ftree-loop-linear \
+          -floop-interchange \
+          -floop-strip-mine \
+          -floop-block
 
-          # Check if there's already something set somewhere.
-          ifndef GRAPHITE_FLAGS
-            GRAPHITE_FLAGS := \
-              $(BASE_GRAPHITE_FLAGS)
-          else
-            GRAPHITE_FLAGS += \
-              $(BASE_GRAPHITE_FLAGS)
-          endif
+        # Check if there's already something set somewhere.
+        ifndef GRAPHITE_FLAGS
+          GRAPHITE_FLAGS := \
+            $(BASE_GRAPHITE_FLAGS)
+        else
+          GRAPHITE_FLAGS += \
+            $(BASE_GRAPHITE_FLAGS)
+        endif
 
-          # Legacy gcc doesn't understand this flag
-          ifneq ($(strip $(USE_LEGACY_GCC)),true)
-            GRAPHITE_FLAGS += \
-              -Wno-error=maybe-uninitialized
-          endif
+        # Legacy gcc doesn't understand this flag
+        ifneq ($(strip $(USE_LEGACY_GCC)),true)
+          GRAPHITE_FLAGS += \
+            -Wno-error=maybe-uninitialized
         endif
       endif
-
+    
       # Path to kernel toolchain
       SM_KERNEL_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(TARGET_SM_KERNEL)
       SM_KERNEL := $(shell $(SM_KERNEL_PATH)/bin/aarch64-gcc --version)
@@ -260,56 +246,52 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         SM_KERNEL_STATUS := $(filter (release) (prerelease) (experimental),$(SM_KERNEL))
         SM_KERNEL_VERSION := $(SM_KERNEL_NAME)-$(SM_KERNEL_DATE)-$(SM_KERNEL_STATUS)
 
-        # Make dependent on -O3 optimizations.
-        # These are extra loop optmizations, that act as helpers for -O3 and other loop optimization flags.
-        ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
+        # Graphite flags for kernel
 
-          # Graphite flags for kernel
+        # Some graphite flags are only available for certain gcc versions
+ export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
 
-          # Some graphite flags are only available for certain gcc versions
-   export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1.x-sabermod 6.0.x-sabermod,$(SM_KERNEL_NAME))
+        BASE_GRAPHITE_KERNEL_FLAGS := \
+          -fgraphite \
+          -fgraphite-identity \
+          -floop-flatten \
+          -ftree-loop-linear \
+          -floop-interchange \
+          -floop-strip-mine \
+          -floop-block \
+          -floop-nest-optimize
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+          BASE_GRAPHITE_KERNEL_FLAGS += \
+            -floop-unroll-and-jam
+        endif
 
-          BASE_GRAPHITE_KERNEL_FLAGS := \
-            -fgraphite \
-            -fgraphite-identity \
-            -floop-flatten \
-            -ftree-loop-linear \
-            -floop-interchange \
-            -floop-strip-mine \
-            -floop-block \
-            -floop-nest-optimize
-          ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
-            BASE_GRAPHITE_KERNEL_FLAGS += \
-              -floop-unroll-and-jam
-          endif
-
-          # Check if there's already something set somewhere.
-          ifndef GRAPHITE_KERNEL_FLAGS
-     export GRAPHITE_KERNEL_FLAGS := \
-              $(BASE_GRAPHITE_KERNEL_FLAGS)
-          else
-     export GRAPHITE_KERNEL_FLAGS := \
-              $(BASE_GRAPHITE_KERNEL_FLAGS) \
-              $(GRAPHITE_KERNEL_FLAGS)
-          endif
+        # Check if there's already something set somewhere.
+        ifndef GRAPHITE_KERNEL_FLAGS
+   export GRAPHITE_KERNEL_FLAGS := \
+            $(BASE_GRAPHITE_KERNEL_FLAGS)
+        else
+   export GRAPHITE_KERNEL_FLAGS := \
+            $(BASE_GRAPHITE_KERNEL_FLAGS) \
+            $(GRAPHITE_KERNEL_FLAGS)
         endif
         ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
-          # strict-aliasing kernel flags
-   export KERNEL_STRICT_FLAGS := \
-            -fstrict-aliasing \
-            -Werror=strict-aliasing
+        # strict-aliasing kernel flags
+ export KERNEL_STRICT_FLAGS := \
+          -fstrict-aliasing \
+          -Werror=strict-aliasing
         endif
       endif
     endif
-
     ifdef TARGET_ARCH_LIB_PATH
+
       # Add extra libs for the compilers to use
-      export LD_LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LD_LIBRARY_PATH)
-      export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
+export LD_LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LD_LIBRARY_PATH)
+export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
     endif
 
     ifneq ($(GRAPHITE_FLAGS),)
+
       # Force disable some modules that are not compatible with graphite flags.
       # Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
       # LOCAL_DISABLE_GRAPHITE:=
@@ -471,11 +453,11 @@ LOCAL_BLUETOOTH_BLUEDROID := \
   libbluetooth_jni
 
 # O3 optimizations
-ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
+ifeq ($(strip $(LOCAL_O3)),true)
 
   # If -O3 is enabled, force disable on thumb flags.
   # loop optmizations are not really usefull in thumb mode.
-  DISABLE_O3_OPTIMIZATIONS_THUMB := true
+  LOCAL_DISABLE_O3_THUMB := true
   OPT2 := (max)
 
   # Disable some modules that break with -O3
@@ -500,22 +482,22 @@ ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
     -O3 \
     -Wno-error=array-bounds \
     -Wno-error=strict-overflow
+else
+    OPT2:=
+endif
 
-  # Extra SaberMod GCC loop flags.
-export EXTRA_SABERMOD_GCC_O3_CFLAGS := \
+# Extra SaberMod GCC loop flags.
+export EXTRA_SABERMOD_GCC := \
          -ftree-loop-distribution \
          -ftree-loop-if-convert \
          -ftree-loop-im \
          -ftree-loop-ivcanon
 
-  EXTRA_SABERMOD_HOST_GCC_O3_CFLAGS := \
-    -ftree-loop-distribution \
-    -ftree-loop-if-convert \
-    -ftree-loop-im \
-    -ftree-loop-ivcanon
-else
-    OPT2:=
-endif
+EXTRA_SABERMOD_HOST_GCC := \
+  -ftree-loop-distribution \
+  -ftree-loop-if-convert \
+  -ftree-loop-im \
+  -ftree-loop-ivcanon
 
 NO_OPTIMIZATIONS := $(LOCAL_BLUETOOTH_BLUEDROID)
 
@@ -570,26 +552,26 @@ endif
 
 # Enable some basic host gcc optimizations
 # None that are cpu specific but arch is ok. It's already known that we are on linux-x86.
-EXTRA_SABERMOD_HOST_GCC_CFLAGS := \
+EXTRA_SABERMOD_HOST_GCC := \
   -march=x86-64 \
   -ftree-vectorize
 
 # Extra SaberMod CLANG C flags
-EXTRA_SABERMOD_CLANG_CFLAGS := \
+EXTRA_SABERMOD_CLANG := \
   -ftree-vectorize
 
 # Check if there's already something set somewhere.
-ifndef LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS
-  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS := $(LOCAL_BLUETOOTH_BLUEDROID)
+ifndef LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE
+  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
 else
-  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS += $(LOCAL_BLUETOOTH_BLUEDROID)
+  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
 endif
 
 # Check if there's already something set somewhere.
-ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS
-  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS := $(LOCAL_BLUETOOTH_BLUEDROID)
+ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE
+  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
 else
-  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS += $(LOCAL_BLUETOOTH_BLUEDROID)
+  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
 endif
 
 # Some flags are only available for certain gcc versions

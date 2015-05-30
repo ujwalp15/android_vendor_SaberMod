@@ -17,7 +17,7 @@
 $(shell unset EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS)
 $(shell unset GRAPHITE_KERNEL_FLAGS)
 $(shell unset KERNEL_STRICT_FLAGS)
-$(shell unset O3_OPTIMIZATIONS)
+$(shell unset LOCAL_O3)
 $(shell unset EXTRA_SABERMOD_GCC_O3_CFLAGS)
 $(shell unset GRAPHITE_UNROLL_AND_JAM)
 $(shell unset LD_LIBRARY_PATH)

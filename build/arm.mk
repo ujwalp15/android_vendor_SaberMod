@@ -61,7 +61,7 @@ ifeq ($(strip $(TARGET_ARCH)),arm)
       else
 
         # Set the normal arm default back to thumb mode if LOCAL_ARM_MODE is not set.
-        # This is needed for the DISABLE_O3_OPTIMIZATIONS_THUMB function to work.
+        # This is needed for the LOCAL_DISABLE_O3_THUMB function to work.
         ifndef LOCAL_ARM_MODE
           LOCAL_ARM_MODE := thumb
         endif
@@ -83,7 +83,7 @@ ifeq ($(strip $(TARGET_ARCH)),arm)
     endif
   endif
 
-  # This is needed for the DISABLE_O3_OPTIMIZATIONS_THUMB function to work on arm devices.
+  # This is needed for the LOCAL_DISABLE_O3_THUMB to work on arm devices.
   ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
     ifndef LOCAL_ARM_MODE
 

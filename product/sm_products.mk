@@ -37,3 +37,8 @@ ifneq ($(filter slim% aicp% cm%,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/product/cm_product.mk
 endif
 
+# General ROM strings
+
+# -O3 disabled by default.  To enable it change here to := true,
+# or enable in vendor/sm/device/sm_device.mk
+export LOCAL_O3 := false

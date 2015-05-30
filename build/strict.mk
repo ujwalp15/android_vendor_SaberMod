@@ -12,12 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# BUGFIX for AOSP
 # Turn all strict-aliasing warnings into errors.
-# strict-aliasing has a long well known history of breaking code when allowed to pass with warnings.
-# AOSP has blindly turned on strict-aliasing in various places locally throughout the source.
-# This causes warnings and should be dealt with, by turning strict-aliasing off to fix the warnings,
-# until AOSP gets around to fixing the warnings locally in the code.
 
 # Warnings and errors are turned on by default if strict-aliasing is set in LOCAL_CFLAGS.  Also check for arm mode strict-aliasing.
 # GCC can handle a warning level of 3 and clang a level of 2.
@@ -29,18 +24,18 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
       arm_objects_cflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)$(my_prefix)$(arm_objects_mode)_CFLAGS)
       ifneq ($(filter -fstrict-aliasing,$(arm_objects_cflags)),)
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(GCC_STRICT_CFLAGS)
+          LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
         else
-          LOCAL_CFLAGS := $(GCC_STRICT_CFLAGS)
+          LOCAL_CFLAGS := $(GCC_STRICT_FLAGS)
         endif
       endif
     else
       arm_objects_cflags := $(call $(LOCAL_2ND_ARCH_VAR_PREFIX)convert-to-$(my_host)clang-flags,$(arm_objects_cflags))
       ifneq ($(filter -fstrict-aliasing,$(arm_objects_cflags)),)
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(CLANG_STRICT_CFLAGS)
+          LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
         else
-          LOCAL_CFLAGS := $(CLANG_STRICT_CFLAGS)
+          LOCAL_CFLAGS := $(CLANG_STRICT_FLAGS)
         endif
       endif
     endif
@@ -49,15 +44,15 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
       ifneq ($(strip $(LOCAL_CLANG)),true)
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(GCC_STRICT_CFLAGS)
+          LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
         else
-          LOCAL_CFLAGS := $(GCC_STRICT_CFLAGS)
+          LOCAL_CFLAGS := $(GCC_STRICT_FLAGS)
         endif
       else
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(CLANG_STRICT_CFLAGS)
+          LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
         else
-          LOCAL_CFLAGS := $(CLANG_STRICT_CFLAGS)
+          LOCAL_CFLAGS := $(CLANG_STRICT_FLAGS)
         endif
       endif
     endif
@@ -72,9 +67,9 @@ ifneq ($(strip $(TARGET_ARCH)),arm64)
   ifneq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     ifeq (1,$(words $(filter -fstrict-aliasing,$(LOCAL_CFLAGS))))
       ifneq ($(strip $(LOCAL_CLANG)),true)
-        LOCAL_CFLAGS += $(GCC_STRICT_CFLAGS)
+        LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
       else
-        LOCAL_CFLAGS += $(CLANG_STRICT_CFLAGS)
+        LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
       endif
     endif
   endif

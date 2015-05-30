@@ -18,21 +18,19 @@
 # Target build flags
 ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
   ifneq ($(strip $(LOCAL_CLANG)),true)
-    ifdef EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS
-      ifneq (1,$(words $(filter $(LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE_CFLAGS),$(LOCAL_MODULE))))
+    ifdef EXTRA_SABERMOD_GCC_VECTORIZE
+      ifneq (1,$(words $(filter $(LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE),$(LOCAL_MODULE))))
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS)
+          LOCAL_CFLAGS += $(EXTRA_SABERMOD_GCC_VECTORIZE)
         else
-          LOCAL_CFLAGS := $(EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS)
+          LOCAL_CFLAGS := $(EXTRA_SABERMOD_GCC_VECTORIZE)
         endif
       endif
     endif
-    ifneq ($(strip $(LOCAL_O3_OPTIMIZATIONS_MODE)),off)
-      ifdef LOCAL_CFLAGS
-        LOCAL_CFLAGS += $(EXTRA_SABERMOD_GCC_O3_CFLAGS)
-      else
-        LOCAL_CFLAGS := $(EXTRA_SABERMOD_GCC_O3_CFLAGS)
-      endif
+    ifdef LOCAL_CFLAGS
+      LOCAL_CFLAGS += $(EXTRA_SABERMOD_GCC)
+    else
+      LOCAL_CFLAGS := $(EXTRA_SABERMOD_GCC)
     endif
   endif
 endif
@@ -40,11 +38,11 @@ endif
 # Clang vectorization flags.
 ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
   ifeq ($(strip $(LOCAL_CLANG)),true)
-    ifneq (1,$(words $(filter $(LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE_CFLAGS),$(LOCAL_MODULE))))
+    ifneq (1,$(words $(filter $(LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE),$(LOCAL_MODULE))))
       ifdef LOCAL_CFLAGS
-        LOCAL_CFLAGS += $(LOCAL_SABERMOD_CLANG_VECTORIZE_CFLAGS)
+        LOCAL_CFLAGS += $(LOCAL_SABERMOD_CLANG_VECTORIZE)
       else
-        LOCAL_CFLAGS := $(LOCAL_SABERMOD_CLANG_VECTORIZE_CFLAGS)
+        LOCAL_CFLAGS := $(LOCAL_SABERMOD_CLANG_VECTORIZE)
       endif
     endif
   endif
@@ -54,13 +52,11 @@ endif
 ifeq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
   ifneq ($(strip $(LOCAL_CLANG)),true)
     ifdef LOCAL_CFLAGS
-      LOCAL_CFLAGS += $(EXTRA_SABERMOD_HOST_GCC_CFLAGS)
+      LOCAL_CFLAGS += $(EXTRA_SABERMOD_HOST_GCC)
     else
-      LOCAL_CFLAGS := $(EXTRA_SABERMOD_HOST_GCC_CFLAGS)
+      LOCAL_CFLAGS := $(EXTRA_SABERMOD_HOST_GCC)
     endif
-    ifeq ($(strip $(LOCAL_O3_OPTIMIZATIONS_MODE)),on)
-      LOCAL_CFLAGS += $(EXTRA_SABERMOD_HOST_GCC_O3_CFLAGS)
-    endif
+    LOCAL_CFLAGS += $(EXTRA_SABERMOD_HOST_GCC)
   endif
 endif
 
@@ -77,14 +73,14 @@ ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
       endif
       ifneq (1,$(words $(filter libwebviewchromium libc_netbsd,$(LOCAL_MODULE))))
         ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += -lgomp -lgcc -fopenmp
+          LOCAL_CFLAGS += -lgomp -ldl -lgcc -fopenmp
         else
-          LOCAL_CFLAGS := -lgomp -lgcc -fopenmp
+          LOCAL_CFLAGS := -lgomp -ldl -lgcc -fopenmp
         endif
         ifdef LOCAL_LDLIBS
-          LOCAL_LDLIBS += -lgomp -lgcc
+          LOCAL_LDLIBS += -lgomp -ldl -lgcc
         else
-          LOCAL_LDLIBS := -lgomp -lgcc
+          LOCAL_LDLIBS := -lgomp -ldl -lgcc
         endif
       endif
     endif
