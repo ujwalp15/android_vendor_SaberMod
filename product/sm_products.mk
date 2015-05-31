@@ -27,7 +27,7 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
 endif
 
 # Filter ROM base
-ifneq ($(filter aosp% boostpop% pa%,$(TARGET_PRODUCT)),)
+ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
 endif
