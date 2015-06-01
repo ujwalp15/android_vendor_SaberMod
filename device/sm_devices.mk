@@ -28,11 +28,12 @@ ifneq ($(filter mako,$(TARGET_DEVICE)),)
   LOCAL_ARCH := arm
 endif
 
+# Kernel binary prefix.  The other part of this will go in the kernel sources Makefiles.
 ifeq ($(strip $(LOCAL_ARCH)),arm)
-export TARGET_KERNEL_TOOLS_PREFIX := arm-linux-gnueabi-
+export CROSS_COMPILE := arm-linux-gnueabi-
 endif
 
 ifeq ($(strip $(LOCAL_ARCH)),arm64)
-export TARGET_KERNEL_TOOLS_PREFIX := aarch64-linux-gnu-
+export CROSS_COMPILE := aarch64-linux-gnu-
 endif
 
