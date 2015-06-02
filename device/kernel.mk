@@ -3,6 +3,8 @@
 # Note for this to work you will need to remove prebuilt kernel building in device tree,
 # and any other inline kernel building implimentations.
 
+# Original Author Jameson Williams jameson.h.williams@intel.com
+
 ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   KERNEL_DEFCONFIG := sabermod_hammerhead_defconfig
   KERNEL_DIR := kernel/lge/hammerhead
