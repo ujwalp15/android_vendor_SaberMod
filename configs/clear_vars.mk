@@ -26,7 +26,7 @@ $(shell unset TARGET_SM_AND)
 $(shell unset TARGET_ARCH_LIB_PATH)
 $(shell unset TARGET_SM_KERNEL)
 $(shell unset SM_KERNEL_NAME)
-$(shell unset TARGET_KERNEL_TOOLS_PREFIX)
+$(shell unset CROSS_COMPILE_NAME)
 
 ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
   $(shell unset CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING)

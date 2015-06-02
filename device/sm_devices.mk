@@ -30,10 +30,10 @@ endif
 
 # Kernel binary prefix.  The other part of this will go in the kernel sources Makefiles.
 ifeq ($(strip $(LOCAL_ARCH)),arm)
-export CROSS_COMPILE := arm-linux-gnueabi-
+export CROSS_COMPILE_NAME := arm-linux-gnueabi-
 endif
 
 ifeq ($(strip $(LOCAL_ARCH)),arm64)
-export CROSS_COMPILE := aarch64-linux-gnu-
+export CROSS_COMPILE_NAME := aarch64-linux-gnu-
 endif
 
