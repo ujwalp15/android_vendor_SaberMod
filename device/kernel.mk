@@ -1,7 +1,7 @@
 # Compile the kernel inline
 
 # Note for this to work you will need to remove prebuilt kernel building in device tree,
-# and any other inline kernel building implimentations.
+# and any other inline kernel building implementations.
 
 # Original Author Jameson Williams jameson.h.williams@intel.com
 
