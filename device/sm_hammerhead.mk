@@ -24,7 +24,6 @@ endif
 ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
-  TARGET_SM_KERNEL := 6.0
   HAMMERHEAD_THREADS := 4
   PRODUCT_THREADS := $(HAMMERHEAD_THREADS)
   ENABLE_STRICT_ALIASING := true
