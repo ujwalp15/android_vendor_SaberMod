@@ -24,6 +24,7 @@ endif
 ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
+  TARGET_SM_KERNEL := 6.0
   ENABLE_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
