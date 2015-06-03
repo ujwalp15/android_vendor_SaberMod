@@ -31,7 +31,7 @@ ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
 endif
 
 # Filter ROM base
-ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
+ifneq ($(filter aosp% boostpop% pa% twisted% benzo%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
 endif
