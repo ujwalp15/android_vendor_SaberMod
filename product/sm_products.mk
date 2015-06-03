@@ -26,6 +26,10 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := mako
 endif
 
+ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := shamu
+endif
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
