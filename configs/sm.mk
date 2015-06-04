@@ -335,6 +335,46 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
           libFraunhoferAAC
       endif
 
+      ifneq ($(filter 5.1% 6.0%,$(SM_AND_NAME)),)
+        LOCAL_BASE_DISABLE_GRAPHITE := \
+          libjavacore \
+          libc_bionic \
+          libnetutils \
+          libandroid_runtime \
+          libpdfiumcore \
+          libicui18n \
+          libicuuc \
+          libhwui \
+          libskia \
+          dhcpcd \
+          libpac \
+          libRS \
+          clatd \
+          libsoftkeymaster \
+          libstagefright_avc_common \
+          libstagefright_color_conversion \
+          libstagefright_matroska \
+          libwebm \
+          libstagefright_amrnb_common \
+          libart \
+          libart-compiler \
+          libjavacrypto \
+          libstagefright_omx \
+          libstagefright_amrnbdec \
+          librtp_jni \
+          libstagefright_amrnbenc \
+          libFraunhoferAAC \
+          audio.r_submix.default \
+          liboverlay \
+          libmedia_jni \
+          libstagefright_amrwbdec \
+          libstagefright_avcenc \
+          libstagefright_mp3dec \
+          libstagefright_m4vh263dec \
+          libstagefright_m4vh263enc \
+          libwebrtc_apm
+      endif
+
       # Check if there's already something set somewhere.
       ifndef LOCAL_DISABLE_GRAPHITE
         LOCAL_DISABLE_GRAPHITE := \

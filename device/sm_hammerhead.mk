@@ -30,10 +30,15 @@ ifeq ($(strip $(HOST_OS)),linux)
   ENABLE_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
-GRAPHITE_KERNEL_FLAGS := \
+  GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
     -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
+
+  ifneq ($(filter 5% 6%,$(TARGET_SM_AND)),)
+    LOCAL_DISABLE_GRAPHITE := \
+      camera.hammerhead
+  endif
 endif
 
 # General flags for gcc 4.9 to allow compilation to complete.
