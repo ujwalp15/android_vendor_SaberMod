@@ -115,7 +115,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         OPT1 := (graphite)
 
         # Some graphite flags are only available for certain gcc versions
- export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1% 6.0%,$(SM_KERNEL_NAME))
+ export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
 
         # Graphite flags and friends
         BASE_GRAPHITE_FLAGS := \
@@ -126,7 +126,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           -floop-interchange \
           -floop-strip-mine \
           -floop-block
-        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM_AND),)
           BASE_GRAPHITE_FLAGS += \
             -floop-unroll-and-jam
         endif
@@ -159,6 +159,9 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
 
         # Graphite flags for kernel
 
+        # Some graphite flags are only available for certain gcc versions
+ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 6.0%,$(SM_KERNEL_NAME))
+
         BASE_GRAPHITE_KERNEL_FLAGS := \
           -fgraphite \
           -fgraphite-identity \
@@ -168,7 +171,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           -floop-strip-mine \
           -floop-block \
           -floop-nest-optimize
-        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM_KERNEL),)
           BASE_GRAPHITE_KERNEL_FLAGS += \
             -floop-unroll-and-jam
         endif
@@ -215,7 +218,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         OPT1 := (graphite)
 
         # Some graphite flags are only available for certain gcc versions
- export GRAPHITE_UNROLL_AND_JAM := $(filter 5.1% 6.0%,$(SM_KERNEL_NAME))
+ export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
 
         # Graphite flags and friends
         BASE_GRAPHITE_FLAGS := \
@@ -226,7 +229,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           -floop-interchange \
           -floop-strip-mine \
           -floop-block
-        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM_AND),)
           BASE_GRAPHITE_FLAGS += \
             -floop-unroll-and-jam
         endif
@@ -259,6 +262,9 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
 
         # Graphite flags for kernel
 
+        # Some graphite flags are only available for certain gcc versions
+ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 6.0%,$(SM_KERNEL_NAME))
+
         BASE_GRAPHITE_KERNEL_FLAGS := \
           -fgraphite \
           -fgraphite-identity \
@@ -268,7 +274,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           -floop-strip-mine \
           -floop-block \
           -floop-nest-optimize
-        ifneq ($(GRAPHITE_UNROLL_AND_JAM),)
+        ifneq ($(GRAPHITE_UNROLL_AND_JAM_KERNEL),)
           BASE_GRAPHITE_KERNEL_FLAGS += \
             -floop-unroll-and-jam
         endif
