@@ -15,5 +15,4 @@
 
 # Android ROM toolchain.
 # This can still be overridden in device/sm_device.mk
-TARGET_SM_AND := 5.1
-TARGET_NDK_VERSION := 4.9
+TARGET_SM_AND := 4.9
