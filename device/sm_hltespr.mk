@@ -41,26 +41,25 @@ GRAPHITE_KERNEL_FLAGS := \
     -fopenmp
 endif
 
-# General flags for gcc 4.9 to allow compilation to complete.
-MAYBE_UNINITIALIZED := \
-  hwcomposer.msm8974 \
-  libbt-brcm_stack
-
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS := \
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
          -ftree-vectorize \
          -mvectorize-with-neon-quad
 
 ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
-  # strict-aliasing kernel flags
-  export KERNEL_STRICT_FLAGS := \
-           -fstrict-aliasing \
-           -Wstrict-aliasing=3 \
-           -Werror=strict-aliasing
 
   # Enable strict-aliasing kernel flags
-#export CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING := y
-#LOCAL_DISABLE_STRICT_ALIASING := \
-   #libmmcamera_interface\
-   #camera.hammerhead
+export CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING := y
+
+  # Check if something is already set in product/sm_products.mk
+  ifndef LOCAL_DISABLE_STRICT_ALIASING
+    LOCAL_DISABLE_STRICT_ALIASING := \
+      libmmcamera_interface\
+      camera.msm8084
+  else
+    LOCAL_DISABLE_STRICT_ALIASING += \
+      libmmcamera_interface\
+      camera.msm8084
+  endif
 endif
+

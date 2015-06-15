@@ -36,3 +36,47 @@ endif
 ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   $(shell unset CONFIG_MACH_MSM8960_MAKO_STRICT_ALIASING)
 endif
+
+ifneq ($(filter %trltetmo,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %trltexx,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %trltespr,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %trlteusc,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %trltevzw,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %hlte,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %hltetmo,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %hltespr,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %hlteusc,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %hltevzw,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_HLTE_STRICT_ALIASING)
+endif
+
+ifneq ($(filter %togari,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_RHINE_STRICT_ALIASING)
+endif
