@@ -49,3 +49,9 @@ endif
 ifneq ($(filter %cmremix_trltexx,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := cmremix_trltexx
 endif
+
+# General ROM strings
+
+# -O3 disabled by default.  To enable it change here to := true,
+# or enable in vendor/sm/device/sm_device.mk
+export LOCAL_O3 := true
