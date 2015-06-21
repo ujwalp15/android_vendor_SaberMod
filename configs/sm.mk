@@ -332,6 +332,47 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -fno-openmp
         endif
 
+        # Floop Nest Modules flags
+        OPT9 := (floop-nest)
+
+   LOCAL_ENABLE_NEST := \
+          art \
+          libsigchain \
+          libart \
+          libart-compiler \
+          libartd \
+          libartd-compiler \
+          libart-disassembler \
+          libartd-disassembler \
+          core.art-host \
+          core.art \
+          cpplint-art-phony \
+          libnativebridgetest \
+          libarttest \
+          art-run-tests \
+          libart-gtest \
+          libc \
+          libc_bionic \
+          libc_gdtoa \
+          libc_netbsd \
+          libc_freebsd \
+          libc_dns \
+          libc_openbsd \
+          libc_cxa \
+          libc_syscalls \
+          libc_aeabi \
+          libc_common \
+          libc_nomalloc \
+          libc_malloc \
+          libc_stack_protector \
+          libc_tzcode \
+          libstdc++ \
+          linker \
+          libdl \
+          libm \
+          tzdata \
+          bionic-benchmarks
+
         ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
         # strict-aliasing kernel flags
@@ -712,7 +753,7 @@ OPT8 := (lto)
 endif
 
 # Right all optimization level options to build.prop
-GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT3)$(OPT4)$(OPT5)$(OPT6)$(OPT7)$(OPT8)
+GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT3)$(OPT4)$(OPT5)$(OPT6)$(OPT7)$(OPT8)$(OPT9)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)
   PRODUCT_PROPERTY_OVERRIDES += \
     ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
