@@ -30,9 +30,11 @@ ifeq ($(strip $(HOST_OS)),linux)
   TARGET_SM_AND := 4.9
   TARGET_SM_KERNEL := 4.9
   USE_CLANG_QCOM := true
+  USE_CLANG_QCOM_VERBOSE := true
   TRLTETMO_THREADS := 4
   PRODUCT_THREADS := $(TRLTETMO_THREADS)
-  ENABLE_STRICT_ALIASING := true
+  LOCAL_STRICT_ALIASING := true
+  LOCAL_O3 := true
   export ENABLE_PTHREAD := false
   LOCAL_LTO := true
   LTO_COMPRESSION_LEVEL := 3
@@ -45,11 +47,10 @@ GRAPHITE_KERNEL_FLAGS := \
 endif
 
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE := \
-         -ftree-vectorize \
+EXTRA_SABERMOD_GCC_VECTORIZE := \
          -mvectorize-with-neon-quad
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
 export CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING := y

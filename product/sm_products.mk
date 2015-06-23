@@ -31,7 +31,7 @@ ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
 endif
 
 # Filter ROM base
-ifneq ($(filter aosp% boostpop% pa% twisted% benzo%,$(TARGET_PRODUCT)),)
+ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
 endif
@@ -51,8 +51,16 @@ ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
   include $(SM_VENDOR)/product/cmremix_product.mk
 endif
 
+# Extra ROM packages
+
+# PA
+ifneq ($(filter pa%,$(TARGET_PRODUCT)),)
+PRODUCT_PACKAGES += \
+  busybox
+endif
+
 # General ROM strings
 
 # -O3 disabled by default.  To enable it change here to := true,
 # or enable in vendor/sm/device/sm_device.mk
-export LOCAL_O3 := true
+# export LOCAL_O3 := true
