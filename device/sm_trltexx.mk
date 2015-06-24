@@ -21,6 +21,9 @@ ifeq ($(strip $(UNAME)),Linux)
   HOST_OS := linux
 endif
 
+# Only use these compilers on linux host.
+ifeq ($(strip $(HOST_OS)),linux)
+
   # Sabermod configs
   TARGET_ARCH := arm
   TARGET_NDK_VERSION := 4.9
