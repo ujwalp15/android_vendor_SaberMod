@@ -332,11 +332,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -fno-openmp
         endif
 
-        # Floop Nest Modules flags
-        ifeq (true,$(FLOOP_NEST_OPTIMIZE))
-        OPT9 := [floop-nest]
-        endif
-
+   # Floop Nest Modules flags
    LOCAL_ENABLE_NEST := \
           art \
           libsigchain \
@@ -759,9 +755,8 @@ export DISABLE_SANITIZE_LEAK := $(filter 4.8%,$(SM_AND))
 OPT3 := [extra]
 OPT6 := [mem-sanitizer]
 OPT7 := [OpenMP]
-ifeq (true,$(LOCAL_LTO))
 OPT8 := [lto]
-endif
+OPT9 := [floop-nest]
 
 # Right all optimization level options to build.prop
 GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT4)$(OPT3)$(OPT6)$(OPT7)$(OPT5)$(OPT8)$(OPT9)
