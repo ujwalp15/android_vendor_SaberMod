@@ -21,6 +21,14 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   endif
 endif
 
+ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/moto/shamu
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter pa%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := sabermod_shamu_defconfig
+  endif
+endif
+
 ifdef KERNEL_DIR
   include $(KERNEL_DIR)/AndroidKernel.mk
 endif
