@@ -59,10 +59,12 @@ export CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING := y
   ifndef LOCAL_DISABLE_STRICT_ALIASING
     LOCAL_DISABLE_STRICT_ALIASING := \
       libmmcamera_interface\
-      camera.msm8084
+      camera.msm8084 \
+      libcurl      
   else
     LOCAL_DISABLE_STRICT_ALIASING += \
       libmmcamera_interface\
-      camera.msm8084
+      camera.msm8084 \
+      libcurl
   endif
 endif
