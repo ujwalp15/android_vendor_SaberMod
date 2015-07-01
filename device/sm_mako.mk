@@ -25,11 +25,15 @@ ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
   TARGET_SM_KERNEL := 5.1
+  MAKO_THREADS := 4
+  PRODUCT_THREADS := $(MAKO_THREADS)
   LOCAL_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
-GRAPHITE_KERNEL_FLAGS := \
-  -fopenmp
+  GRAPHITE_KERNEL_FLAGS := \
+    -floop-parallelize-all \
+    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
+    -fopenmp
 endif
 
 # Extra SaberMod GCC C flags for arch target and Kernel
