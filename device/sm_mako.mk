@@ -25,7 +25,7 @@ ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
   TARGET_SM_KERNEL := 5.1
-  ENABLE_STRICT_ALIASING := true
+  LOCAL_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
 GRAPHITE_KERNEL_FLAGS := \
@@ -36,7 +36,7 @@ endif
 EXTRA_SABERMOD_GCC_VECTORIZE := \
   -mvectorize-with-neon-quad
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
 export CONFIG_MACH_MSM8960_MAKO_STRICT_ALIASING := y
