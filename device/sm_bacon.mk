@@ -29,15 +29,12 @@ ifeq ($(strip $(HOST_OS)),linux)
   BACON_THREADS := 4
   PRODUCT_THREADS := $(BACON_THREADS)
   LOCAL_STRICT_ALIASING := true
-export LOCAL_O3 := true
+  export LOCAL_O3 := true
 
   GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
     -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
-
-    LOCAL_DISABLE_GRAPHITE := \
-      libcutils_32
 endif
 
 # General flags for gcc 4.9 to allow compilation to complete.
@@ -51,7 +48,7 @@ EXTRA_SABERMOD_GCC_VECTORIZE := \
 ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
-export CONFIG_MACH_MSM8974_BACON_STRICT_ALIASING := y
+  export CONFIG_MACH_MSM8974_BACON_STRICT_ALIASING := y
 
   # Check if something is already set in product/sm_products.mk
   ifndef LOCAL_DISABLE_STRICT_ALIASING
@@ -61,5 +58,5 @@ export CONFIG_MACH_MSM8974_BACON_STRICT_ALIASING := y
     LOCAL_DISABLE_STRICT_ALIASING += \
       libmmcamera_interface\
   endif
-endif
+  endif
 endif
