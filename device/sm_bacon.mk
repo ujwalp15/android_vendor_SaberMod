@@ -32,8 +32,6 @@ ifeq ($(strip $(HOST_OS)),linux)
   export LOCAL_O3 := true
 
   GRAPHITE_KERNEL_FLAGS := \
-    -floop-parallelize-all \
-    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
 endif
 
@@ -48,7 +46,7 @@ EXTRA_SABERMOD_GCC_VECTORIZE := \
 ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
-  export CONFIG_MACH_MSM8974_BACON_STRICT_ALIASING := y
+  export CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING := y
 
   # Check if something is already set in product/sm_products.mk
   ifndef LOCAL_DISABLE_STRICT_ALIASING
@@ -58,5 +56,5 @@ ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     LOCAL_DISABLE_STRICT_ALIASING += \
       libmmcamera_interface\
   endif
-  endif
+endif
 endif
