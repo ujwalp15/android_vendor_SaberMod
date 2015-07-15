@@ -29,6 +29,11 @@ ifeq ($(strip $(HOST_OS)),linux)
   PRODUCT_THREADS := $(SHAMU_THREADS)
   ENABLE_STRICT_ALIASING := false
   LOCAL_O3 := true
+  USE_CLANG_QCOM := true
+  USE_CLANG_QCOM_VERBOSE := false
+  CLANG_QCOM_COMPILE_ART := false
+  CLANG_QCOM_COMPILE_BIONIC := true
+  CLANG_QCOM_COMPILE_MIXED := true
 
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
