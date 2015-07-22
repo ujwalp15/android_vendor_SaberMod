@@ -53,6 +53,9 @@ ifneq ($(filter %slimremix_shamu,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := slimremix_shamu
 endif
 
+ifneq ($(filter %slimremix_falcon,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := slimremix_falcon
+endif
 
 # General ROM strings
 
