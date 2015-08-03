@@ -21,6 +21,22 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   endif
 endif
 
+ifneq ($(filter %trltetmo %trltespr %trltexx %trlteusc %trltevzw,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/samsung/trlte
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter slimremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := apq8084_sec_defconfig
+  endif
+endif
+
+ifneq ($(filter %trltetmo %trltespr %trltexx %trlteusc %trltevzw,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/samsung/trlte
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := apq8084_sec_defconfig
+  endif
+endif
+
 ifdef KERNEL_DIR
   include $(KERNEL_DIR)/AndroidKernel.mk
 endif
