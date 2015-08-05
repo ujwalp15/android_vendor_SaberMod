@@ -45,6 +45,7 @@ ifeq ($(strip $(HOST_OS)),linux)
 
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
+    -floop-nest-optimize \
     -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
 endif
