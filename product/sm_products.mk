@@ -35,7 +35,7 @@ ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
 endif
 
 ifneq ($(filter %baconcaf,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := bacon
+  TARGET_DEVICE := baconcaf
 endif
 
 # Filter ROM base
