@@ -28,7 +28,7 @@ ifeq ($(strip $(HOST_OS)),linux)
   TARGET_ARCH := arm
   TARGET_NDK_VERSION := 4.9
   TARGET_SM_AND := 4.9
-  TARGET_SM_KERNEL := 5.2
+  TARGET_SM_KERNEL := 4.9
   USE_CLANG_QCOM := true
   USE_CLANG_QCOM_VERBOSE := false
   CLANG_QCOM_COMPILE_ART := false
