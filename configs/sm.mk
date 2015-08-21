@@ -567,6 +567,7 @@ ifeq ($(strip $(LOCAL_O3)),true)
     LOCAL_DISABLE_O3 := \
       libaudioflinger \
       skia_skia_library_gyp \
+      mdnsd \
       $(LOCAL_BLUETOOTH_BLUEDROID)
   else
     LOCAL_DISABLE_O3 += \
@@ -606,7 +607,9 @@ export EXTRA_SABERMOD_GCC_VECTORIZE := \
          -ftree-vectorize
 endif
 
-NO_OPTIMIZATIONS := $(LOCAL_BLUETOOTH_BLUEDROID)
+NO_OPTIMIZATIONS := \
+    mdnsd \
+    $(LOCAL_BLUETOOTH_BLUEDROID)
 
 ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
   # SABERMOD_ARM_MODE
@@ -625,6 +628,7 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
     libscrypt_static \
     libRSCpuRef \
     libRSDriver \
+    mdnsd \
     $(LOCAL_BLUETOOTH_BLUEDROID)
 
   LOCAL_ARM64_COMPILERS_WHITELIST_BASE := \
@@ -638,6 +642,7 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
     netd \
     libRSDriver \
     libjpeg \
+    mdnsd \
     $(LOCAL_BLUETOOTH_BLUEDROID)
 
   # Check if there's already something set somewhere.
