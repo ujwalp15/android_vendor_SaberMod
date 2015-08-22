@@ -66,26 +66,36 @@ endif
 ifneq ($(filter %trltexx,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_trltexx.mk
   LOCAL_ARCH := arm
+  PRODUCT_PACKAGES += FireFox-arm-SM4.9
+  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %trltevzw,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_trltevzw.mk
   LOCAL_ARCH := arm
+  PRODUCT_PACKAGES += FireFox-arm-SM4.9
+  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %falcon,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_falcon.mk
   LOCAL_ARCH := arm
+  PRODUCT_PACKAGES += FireFox-arm-SM4.9
+  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %jflteusc,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_jflteusc.mk
   LOCAL_ARCH := arm
+  PRODUCT_PACKAGES += FireFox-arm-SM4.9
+  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %sprout4,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_sprout4.mk
   LOCAL_ARCH := arm
+  PRODUCT_PACKAGES += FireFox-arm-SM4.9
+  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 # Kernel binary prefix.  The other part of this will go in the kernel source's AndroidKernel.mk.
