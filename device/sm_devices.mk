@@ -13,6 +13,11 @@
 # limitations under the License.
 #
 
+ifneq ($(filer bacon,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_bacon.mk
+	LOCAL_ARCH := arm
+endif
+
 ifneq ($(filter flounder,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_flounder.mk
   LOCAL_ARCH := arm64
@@ -102,4 +107,3 @@ endif
 ifeq ($(strip $(LOCAL_ARCH)),arm64)
 export CROSS_COMPILE_NAME := aarch64-linux-gnu-
 endif
-
