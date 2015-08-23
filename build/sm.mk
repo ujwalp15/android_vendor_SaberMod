@@ -33,10 +33,12 @@ ifeq ($(strip $(LOCAL_O3)),true)
         LOCAL_CFLAGS := $(O3_FLAGS)
       endif
     else
-      ifdef LOCAL_CFLAGS
-        LOCAL_CFLAGS += -O2
-      else
-        LOCAL_CFLAGS := -O2
+      ifneq (1,$(words $(filter $(NO_OPTIMIZATIONS),$(LOCAL_MODULE))))
+        ifdef LOCAL_CFLAGS
+          LOCAL_CFLAGS += -O2
+        else
+          LOCAL_CFLAGS := -O2
+        endif
       endif
     endif
   endif
