@@ -22,40 +22,30 @@ ifneq ($(filter hammerhead,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_hammerhead.mk
   ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter mako,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_mako.mk
   ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter shamu,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_shamu.mk
   ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter bacon,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_bacon.mk
   ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter baconcaf,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_bacon.mk
   ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 # Kernel binary prefix.  The other part of this will go in the kernel source's AndroidKernel.mk.
