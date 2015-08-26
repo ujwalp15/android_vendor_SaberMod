@@ -14,6 +14,10 @@
 #
 
 # Filter device
+ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE :=bacon
+endif
+
 ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := flounder
 endif
