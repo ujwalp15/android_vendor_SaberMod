@@ -24,7 +24,7 @@ endif
 ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
-  TARGET_SM_KERNEL := 5.2
+  TARGET_SM_KERNEL := 4.9
   SHAMU_THREADS := 4
   PRODUCT_THREADS := $(SHAMU_THREADS)
   ENABLE_STRICT_ALIASING := false
