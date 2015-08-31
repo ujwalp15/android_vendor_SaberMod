@@ -87,23 +87,6 @@ endif
 # Turn debugging off for all builds.
 FORCE_DISABLE_DEBUGGING := true
 
-# Bluetooth modules
-LOCAL_BLUETOOTH_BLUEDROID := \
-  bluetooth.default \
-  libbt-brcm_stack \
-  audio.a2dp.default \
-  libbt-brcm_gki \
-  libbt-utils \
-  libbt-qcom_sbc_decoder \
-  libbt-brcm_bta \
-  bdt \
-  bdtest \
-  libbt-hci \
-  libosi \
-  ositests \
-  libbt-vendor \
-  libbluetooth_jni
-
 # Only use these compilers on linux host and arm targets.
 
 ifeq ($(strip $(HOST_OS)),linux)
@@ -232,9 +215,6 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         export ENABLE_GCC_DEFAULTS := true
         USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
       endif
-
-      # Modules that need to be compiled with gcc 4.8
-      GCC_4_8_MODULES := $(LOCAL_BLUETOOTH_BLUEDROID)
     endif
 
     ifeq ($(strip $(LOCAL_ARCH)),arm64)
@@ -557,6 +537,23 @@ else
     fastboot
 endif
 
+# Bluetooth modules
+LOCAL_BLUETOOTH_BLUEDROID := \
+  bluetooth.default \
+  libbt-brcm_stack \
+  audio.a2dp.default \
+  libbt-brcm_gki \
+  libbt-utils \
+  libbt-qcom_sbc_decoder \
+  libbt-brcm_bta \
+  bdt \
+  bdtest \
+  libbt-hci \
+  libosi \
+  ositests \
+  libbt-vendor \
+  libbluetooth_jni
+
 # O3 optimizations
 ifeq ($(strip $(LOCAL_O3)),true)
 
@@ -573,21 +570,13 @@ ifeq ($(strip $(LOCAL_O3)),true)
   ifndef LOCAL_DISABLE_O3
     LOCAL_DISABLE_O3 := \
       libaudioflinger \
-      skia_skia_library_gyp
-
-    ifeq ($(strip $(LOCAL_ARCH)),arm64)
-      LOCAL_DISABLE_O3 += \
-        $(LOCAL_BLUETOOTH_BLUEDROID)
-    endif
+      skia_skia_library_gyp \
+      $(LOCAL_BLUETOOTH_BLUEDROID)
   else
     LOCAL_DISABLE_O3 += \
       libaudioflinger \
-      skia_skia_library_gyp
-
-    ifeq ($(strip $(LOCAL_ARCH)),arm64)
-      LOCAL_DISABLE_O3 += \
-        $(LOCAL_BLUETOOTH_BLUEDROID)
-    endif
+      skia_skia_library_gyp \
+      $(LOCAL_BLUETOOTH_BLUEDROID)
   endif
 
   # -O3 flags and friends
@@ -621,9 +610,7 @@ export EXTRA_SABERMOD_GCC_VECTORIZE := \
          -ftree-vectorize
 endif
 
-ifeq ($(strip $(LOCAL_ARCH)),arm64)
-  NO_OPTIMIZATIONS := $(LOCAL_BLUETOOTH_BLUEDROID)
-endif
+NO_OPTIMIZATIONS := $(LOCAL_BLUETOOTH_BLUEDROID)
 
 ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
   # SABERMOD_ARM_MODE
@@ -642,7 +629,8 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
     libscrypt_static \
     libRSCpuRef \
     libRSDriver \
-    mdnsd
+    mdnsd \
+    $(LOCAL_BLUETOOTH_BLUEDROID)
 
   LOCAL_ARM64_COMPILERS_WHITELIST_BASE := \
     libc++abi \
@@ -700,20 +688,18 @@ endif
 EXTRA_SABERMOD_CLANG := \
   -ftree-vectorize
 
-ifeq ($(strip $(LOCAL_ARCH)),arm64)
-  # Check if there's already something set somewhere.
-  ifndef LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE
-    LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
-  else
-    LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
-  endif
+# Check if there's already something set somewhere.
+ifndef LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE
+  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
+else
+  LOCAL_DISABLE_SABERMOD_GCC_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
+endif
 
-  # Check if there's already something set somewhere.
-  ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE
-    LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
-  else
-    LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
-  endif
+# Check if there's already something set somewhere.
+ifndef LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE
+  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE := $(LOCAL_BLUETOOTH_BLUEDROID)
+else
+  LOCAL_DISABLE_SABERMOD_CLANG_VECTORIZE += $(LOCAL_BLUETOOTH_BLUEDROID)
 endif
 
 # Some flags are only available for certain gcc versions
