@@ -13,6 +13,21 @@
 # limitations under the License.
 #
 
+# HOST_OS
+UNAME := $(shell uname -s)
+ifneq (,$(findstring Linux,$(UNAME)))
+  HOST_OS := linux
+endif
+ifneq (,$(findstring Darwin,$(UNAME)))
+  HOST_OS := darwin
+endif
+ifneq (,$(findstring Macintosh,$(UNAME)))
+  HOST_OS := darwin
+endif
+ifneq (,$(findstring CYGWIN,$(UNAME)))
+  HOST_OS := windows
+endif
+
 include $(SM_VENDOR)/configs/clear_vars.mk
 include $(SM_VENDOR)/product/sm_products.mk
 include $(SM_VENDOR)/device/sm_devices.mk

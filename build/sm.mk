@@ -45,22 +45,19 @@ ifeq ($(strip $(LOCAL_O3)),true)
 endif
 
 # Do not use graphite on host modules or the clang compiler.
-# Also do not bother using on darwin.
-ifeq ($(HOST_OS),linux)
-  ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
+ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
 
-    # If it gets this far enable graphite by default from here on out.
-    ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
-      ifdef LOCAL_CFLAGS
-        LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
-      else
-        LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
-      endif
-      ifdef LOCAL_LDFLAGS
-        LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
-      else
-        LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
-      endif
+  # If it gets this far enable graphite by default from here on out.
+  ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
+    ifdef LOCAL_CFLAGS
+      LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
+    else
+      LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
+    endif
+    ifdef LOCAL_LDFLAGS
+      LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
+    else
+      LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
     endif
   endif
 endif
