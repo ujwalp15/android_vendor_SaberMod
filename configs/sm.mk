@@ -205,7 +205,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAM
 
     # GCC hybrid mode.
     ifneq (,$(filter 5.% 6.%,$(SM_AND_NAME)))
-      GCC_4_9_MODULES := \
+      GCC_4_9_MODULES_BASE := \
         libcutils \
         libbccRenderscript \
         libbcinfo \
@@ -225,6 +225,11 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAM
         libart-disassembler \
         oatdump \
         patchoat
+      ifndef GCC_4_9_MODULES
+        GCC_4_9_MODULES := $(GCC_4_9_MODULES_BASE)
+      else
+        GCC_4_9_MODULES += $(GCC_4_9_MODULES_BASE)
+      endif
     endif
   endif
 
