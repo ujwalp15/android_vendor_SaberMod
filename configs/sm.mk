@@ -116,10 +116,6 @@ export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME))
         -floop-interchange \
         -floop-strip-mine \
         -floop-block
-      ifneq ($(GRAPHITE_UNROLL_AND_JAM_AND),)
-        BASE_GRAPHITE_FLAGS += \
-          -floop-unroll-and-jam
-      endif
 
       # Check if there's already something set somewhere.
       ifndef GRAPHITE_FLAGS
@@ -206,6 +202,30 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAM
       export ENABLE_GCC_DEFAULTS := true
       USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
     endif
+
+    # GCC hybrid mode.
+    ifneq (,$(filter 5.% 6.%,$(SM_AND_NAME)))
+      GCC_4_9_MODULES := \
+        libcutils \
+        libbccRenderscript \
+        libbcinfo \
+        libbccCore \
+        libbccExecutionEngine \
+        libbccSupport \
+        librsloader \
+        bcc \
+        dalvikvm \
+        libbacktrace_libc++ \
+        base_base_gyp \
+        libart \
+        dex2oat \
+        libvixl \
+        libart-compiler \
+        libaudioresampler \
+        libart-disassembler \
+        oatdump \
+        patchoat
+    endif
   endif
 
   ifeq ($(strip $(LOCAL_ARCH)),arm64)
@@ -242,10 +262,6 @@ export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME))
         -floop-interchange \
         -floop-strip-mine \
         -floop-block
-      ifneq ($(GRAPHITE_UNROLL_AND_JAM_AND),)
-        BASE_GRAPHITE_FLAGS += \
-          -floop-unroll-and-jam
-      endif
 
       # Check if there's already something set somewhere.
       ifndef GRAPHITE_FLAGS
