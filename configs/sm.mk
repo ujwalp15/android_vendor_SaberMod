@@ -105,7 +105,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       OPT1 := [graphite]
 
       # Some graphite flags are only available for certain gcc versions
-export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME))
+export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.% 6.%,$(SM_AND_NAME))
 
       # Graphite flags and friends
       BASE_GRAPHITE_FLAGS := \
@@ -146,7 +146,7 @@ export SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
       # Graphite flags for kernel
 
       # Some graphite flags are only available for certain gcc versions
-export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAME))
+export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
 
       BASE_GRAPHITE_KERNEL_FLAGS := \
         -fgraphite \
@@ -172,7 +172,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAM
           $(GRAPHITE_KERNEL_FLAGS)
       endif
 
-      ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAME)),)
+      ifneq ($(filter 5.% 6.%,$(SM_KERNEL_NAME)),)
 
         # Flags to disable graphite in the kernel for gcc 5/6
  export LOCAL_DISABLE_KERNEL_GRAPHITE := \
@@ -256,7 +256,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       OPT1 := [graphite]
 
       # Some graphite flags are only available for certain gcc versions
-export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME))
+export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.% 6.%,$(SM_AND_NAME))
 
       # Graphite flags and friends
       BASE_GRAPHITE_FLAGS := \
@@ -297,7 +297,7 @@ export SM_KERNEL_NAME := $(filter %sabermod,$(SM_KERNEL))
       # Graphite flags for kernel
 
       # Some graphite flags are only available for certain gcc versions
-export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAME))
+export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
 
       BASE_GRAPHITE_KERNEL_FLAGS := \
         -fgraphite \
@@ -323,7 +323,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAM
           $(GRAPHITE_KERNEL_FLAGS)
       endif
 
-      ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAME)),)
+      ifneq ($(filter 5.% 6.%,$(SM_KERNEL_NAME)),)
         # Flags to disable graphite in the kernel for gcc 5/6
  export LOCAL_DISABLE_KERNEL_GRAPHITE := \
           -fno-graphite \
@@ -387,7 +387,7 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
         libFraunhoferAAC
     endif
 
-    ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME)),)
+    ifneq ($(filter 5.% 6.%,$(SM_AND_NAME)),)
       LOCAL_BASE_DISABLE_GRAPHITE := \
         libjavacore \
         libc_bionic \
@@ -435,12 +435,6 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
       LOCAL_DISABLE_GRAPHITE += \
         $(LOCAL_BASE_DISABLE_GRAPHITE)
     endif
-  endif
-
-  # GCC 5/6 variables.
-  ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_KERNEL_NAME)),)
-    WARN_NO_ERROR := \
-      base_base_gyp
   endif
 endif
 
