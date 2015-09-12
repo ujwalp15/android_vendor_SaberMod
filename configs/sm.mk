@@ -83,7 +83,7 @@ FORCE_DISABLE_DEBUGGING := true
 ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
   ifeq ($(strip $(LOCAL_ARCH)),arm)
 
-export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib:$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_SM_KERNEL)/lib
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib
 
     # Path to ROM toolchain
     SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)
@@ -155,8 +155,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
         -ftree-loop-linear \
         -floop-interchange \
         -floop-strip-mine \
-        -floop-block \
-        -floop-nest-optimize
+        -floop-block
       ifneq ($(GRAPHITE_UNROLL_AND_JAM_KERNEL),)
         BASE_GRAPHITE_KERNEL_FLAGS += \
           -floop-unroll-and-jam
@@ -197,6 +196,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
           -fstrict-aliasing \
           -Werror=strict-aliasing
       endif
+ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_SM_KERNEL)/lib:$(TARGET_ARCH_LIB_PATH)
     endif
     ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
       export ENABLE_GCC_DEFAULTS := true
@@ -235,7 +235,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
 
   ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
-export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(HOST_OS)-android-$(TARGET_SM_AND)/lib:$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(TARGET_SM_KERNEL)/lib
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(HOST_OS)-android-$(TARGET_SM_AND)/lib
 
     # Path to toolchain
     SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(HOST_OS)-android-$(TARGET_SM_AND)
@@ -306,8 +306,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
         -ftree-loop-linear \
         -floop-interchange \
         -floop-strip-mine \
-        -floop-block \
-        -floop-nest-optimize
+        -floop-block
       ifneq ($(GRAPHITE_UNROLL_AND_JAM_KERNEL),)
         BASE_GRAPHITE_KERNEL_FLAGS += \
           -floop-unroll-and-jam
@@ -348,6 +347,7 @@ export KERNEL_STRICT_FLAGS := \
         -Werror=strict-aliasing
       endif
     endif
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(TARGET_SM_KERNEL)/lib:$(TARGET_ARCH_LIB_PATH)
   endif
   ifdef TARGET_ARCH_LIB_PATH
 
@@ -558,6 +558,9 @@ LOCAL_BLUETOOTH_BLUEDROID := \
 # O3 optimizations
 ifeq ($(strip $(LOCAL_O3)),true)
 
+  # Export to the kernel
+export LOCAL_O3 := true
+
   # If -O3 is enabled, force disable on thumb flags.
   # loop optmizations are not really usefull in thumb mode.
   LOCAL_DISABLE_O3_THUMB := true
@@ -587,6 +590,12 @@ ifeq ($(strip $(LOCAL_O3)),true)
     -Wno-error=strict-overflow
 else
     OPT2:=
+endif
+
+ifeq (true,$(strip $(DISABLE_O3_KERNEL)))
+
+  # Export to the kernel
+export DISABLE_O3_KERNEL := true
 endif
 
 # Extra SaberMod GCC loop flags.
