@@ -22,21 +22,30 @@ endif
 
 # Only use these compilers on linux host.
 ifeq ($(strip $(HOST_OS)),linux)
-
-  # Sabermod configs
-  TARGET_SM_KERNEL := 4.9
-  TARGET_SM_AND := 4.9
-  PRODUCT_THREADS := 4
-  USE_SABER_INLINE_KERNEL_BUILDING := false
-  ENABLE_STRICT_ALIASING := false
-  export USE_KERNEL_OPTIMIZATIONS := true
-  export LOCAL_O3 := true
-
-GRAPHITE_KERNEL_FLAGS := \
-    -fopenmp
-endif
-
-# Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS := \
-         -ftree-vectorize \
-         -mvectorize-with-neon-quad
+TARGET_ARCH := arm
+   TARGET_NDK_VERSION := 4.9
+   TARGET_SM_AND := 4.9
+   TARGET_SM_KERNEL := 5.2
+   USE_CLANG_QCOM := true
+   USE_CLANG_QCOM_VERBOSE := false
+   CLANG_QCOM_COMPILE_ART := false
+   CLANG_QCOM_COMPILE_BIONIC := true
+   CLANG_QCOM_COMPILE_MIXED := true
+   BACON_THREADS := 4
+   PRODUCT_THREADS := $(BACON_THREADS)
+   LOCAL_STRICT_ALIASING := true
+   LOCAL_O3 := true
+   export ENABLE_PTHREAD := false
+   LOCAL_LTO := true
+   LTO_COMPRESSION_LEVEL := 3
+   FLOOP_NEST_OPTIMIZE := true
+ 
+ GRAPHITE_KERNEL_FLAGS := \
+     -floop-parallelize-all \
+     -ftree-parallelize-loops=$(PRODUCT_THREADS) \
+     -fopenmp
+ endif
+ 
+ # Extra SaberMod GCC C flags for arch target and Kernel
+ EXTRA_SABERMOD_GCC_VECTORIZE := \
+          -mvectorize-with-neon-quad
