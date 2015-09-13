@@ -14,8 +14,11 @@
 #
 CORTEX_A15_TYPE := \
 	cortex-a15 \
-	krait \
+	krait 
+CORTEX_A57_TYPE := \
+	cortex-a57 \
 	denver
+	
 ifneq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
   ifneq (1,$(words $(filter $(LOCAL_DISABLE_TUNE), $(LOCAL_MODULE))))
    ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
@@ -53,13 +56,21 @@ ifneq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
       ifdef LOCAL_CFLAGS
         LOCAL_CFLAGS += -mcpu=cortex-a7 \
 	    -mtune=cortex-a7
-    else
+      else
       LOCAL_CFLAGS := -mcpu=cortex-a7 \
 	    -mtune=cortex-a7
+      endif
+      
+    ifneq (,$(filter $(CORTEX_A57_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += -mcpu=cortex-a57 \
+	    -mtune=cortex-a57
+      else
+      LOCAL_CFLAGS := -mcpu=cortex-a57 \
+	    -mtune=cortex-a57
       endif
     endif
    endif
   endif
 endif
 #####
-
