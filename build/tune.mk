@@ -60,6 +60,7 @@ ifneq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
       LOCAL_CFLAGS := -mcpu=cortex-a7 \
 	    -mtune=cortex-a7
       endif
+    endif
       
     ifneq (,$(filter $(CORTEX_A57_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
       ifdef LOCAL_CFLAGS
