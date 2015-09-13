@@ -201,6 +201,18 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
     ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
       export ENABLE_GCC_DEFAULTS := true
       USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
+      OPT8 := [gcc-defaults]
+    else
+      # Disable Certain modules for CPU Tuning.
+      LOCAL_DISABLE_TUNE := \
+	libc_dns \
+	libc_tzcode \
+	bluetooth.default \
+	libwebviewchromium \
+	libwebviewchromium_loader \
+	libwebviewchromium_plat_support \
+	$(LOCAL_BLUETOOTH_BLUEDROID)
+      OPT8 := [cpu-tune]
     endif
 
     # GCC hybrid mode.
@@ -720,7 +732,7 @@ OPT6 := [mem-sanitizer]
 OPT7 := [OpenMP]
 
 # Right all optimization level options to build.prop
-GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT4)$(OPT3)$(OPT6)$(OPT7)$(OPT5)
+GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT4)$(OPT3)$(OPT6)$(OPT7)$(OPT8)$(OPT5)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)
   PRODUCT_PROPERTY_OVERRIDES += \
     ro.sm.flags="$(GCC_OPTIMIZATION_LEVELS)"
