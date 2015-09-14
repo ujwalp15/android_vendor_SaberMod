@@ -12,14 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-CORTEX_A15_TYPE := \
-	cortex-a15 \
-	krait 
-CORTEX_A57_TYPE := \
-	cortex-a57 \
-	denver
+ifeq (arm,$(strip $(TARGET_ARCH)))
+  CORTEX_A15_TYPE := \
+    cortex-a15 \
+    krait
+endif
 
-ifneq (true,$(strip $(ENABLE_GCC_DEFAULTS)))
+ifeq (arm64,$(strip $(TARGET_ARCH)))
+  CORTEX_A57_TYPE := \
+    cortex-a57 \
+    denver
+endif
+
+ifeq (true,$(strip $(ENABLE_GCC_DEFAULTS)))
   ifneq (,$(strip $(CORTEX_A15_TYPE)))
     LOCAL_CORTEX_FLAGS := $(USE_GCC_DEFAULTS)
   endif
