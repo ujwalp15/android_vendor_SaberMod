@@ -384,7 +384,9 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
         ui_gl_gl_gyp \
         fio \
         libpdfiumcore \
-        libFraunhoferAAC
+        libFraunhoferAAC \
+        libinput \
+        libmedia
     endif
 
     ifneq ($(filter 5.% 6.%,$(SM_AND_NAME)),)
