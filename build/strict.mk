@@ -41,7 +41,7 @@ ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     endif
   endif
   ifeq ($(strip $(TARGET_ARCH)),arm64)
-    ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
+    ifneq (true,$(strip $(LOCAL_CLANG)))
       ifdef LOCAL_CFLAGS
         LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
       else
@@ -59,23 +59,8 @@ else
   LOCAL_CFLAGS += -fno-strict-aliasing
 endif
 
-ifneq ($(strip $(TARGET_ARCH)),arm64)
-  ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
-
-    # Check for local cflags.
-    ifneq ($(strip $(LOCAL_STRICT_ALIASING)),true)
-      ifeq (1,$(words $(filter -fstrict-aliasing,$(LOCAL_CFLAGS))))
-        ifneq ($(strip $(LOCAL_CLANG)),true)
-          LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
-        else
-          LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
-        endif
-      endif
-    endif
-  endif
-endif
 ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
   ifeq (1,$(words $(filter $(LOCAL_DISABLE_STRICT_ALIASING),$(LOCAL_MODULE))))
-      LOCAL_CFLAGS += -fno-strict-aliasing
+    LOCAL_CFLAGS += -fno-strict-aliasing
   endif
 endif
