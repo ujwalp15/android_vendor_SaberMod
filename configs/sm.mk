@@ -97,14 +97,14 @@ ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
     endif
 
     ifeq (,$(filter 5.% 6.%,$(TARGET_SM_AND)))
-export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_SM_AND)/lib
     else
-export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib:$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SECOND_SM_AND)/lib
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_SM_AND)/lib:$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_SECOND_SM_AND)/lib
     endif
 
     # Path to ROM toolchain
-    SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)
-    SM_AND := $(shell $(SM_AND_PATH)/bin/arm-$(HOST_OS)-androideabi-gcc --version)
+    SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-$(TARGET_SM_AND)
+    SM_AND := $(shell $(SM_AND_PATH)/bin/arm-linux-androideabi-gcc --version)
 
     # Find strings in version info
     ifneq ($(filter %sabermod,$(SM_AND)),)
@@ -264,11 +264,11 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
 
   ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
-export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(HOST_OS)-android-$(TARGET_SM_AND)/lib
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-linux-android-$(TARGET_SM_AND)/lib
 
     # Path to toolchain
-    SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-$(HOST_OS)-android-$(TARGET_SM_AND)
-    SM_AND := $(shell $(SM_AND_PATH)/bin/aarch64-$(HOST_OS)-android-gcc --version)
+    SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/aarch64/aarch64-linux-android-$(TARGET_SM_AND)
+    SM_AND := $(shell $(SM_AND_PATH)/bin/aarch64-linux-android-gcc --version)
 
     # Find strings in version info
     ifneq ($(filter %sabermod,$(SM_AND)),)
@@ -722,9 +722,7 @@ endif
 EXTRA_SABERMOD_HOST_GCC := \
   -ftree-vectorize
 
-ifeq ($(strip $(HOST_OS)),linux)
-  EXTRA_SABERMOD_HOST_GCC := -march=x86-64
-endif
+EXTRA_SABERMOD_HOST_GCC := 
 
 # Extra SaberMod CLANG C flags
 EXTRA_SABERMOD_CLANG := \

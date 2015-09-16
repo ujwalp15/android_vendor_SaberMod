@@ -94,4 +94,14 @@ ifneq (1,$(words $(filter $(LOCAL_DISABLE_TUNE), $(LOCAL_MODULE))))
     endif
   endif
 endif
+
+ifeq (true,$(strip $(LOCAL_IS_HOST_MODULE)))
+  ifdef LOCAL_CFLAGS
+    LOCAL_CFLAGS += -march=native \
+      -mtune=native
+  else
+    LOCAL_CFLAGS := -march=native \
+      -mtune=native
+  endif
+endif
 #####
