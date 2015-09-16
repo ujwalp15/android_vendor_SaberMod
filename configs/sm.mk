@@ -22,20 +22,20 @@
 ifdef TARGET_SM_AND
 export TARGET_SM_AND := $(TARGET_SM_AND)
 else
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
   $(warning TARGET_SM_AND not defined.)
   $(warning Defaulting to gcc 4.9 for ROM.)
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
 export TARGET_SM_AND := 4.9
 endif
 
 ifdef TARGET_SM_KERNEL
   export TARGET_SM_KERNEL := $(TARGET_SM_KERNEL)
 else
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
   $(warning TARGET_SM_KERNEL not defined.)
   $(warning Defaulting to ROM gcc version $(TARGET_SM_AND).)
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
   export TARGET_SM_KERNEL := $(TARGET_SM_AND)
 endif
 
@@ -43,10 +43,10 @@ endif
 export GCC_COLORS := 'error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ifndef LOCAL_ARCH
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
   $(warning Can not determine arch type, defaulting to arm)
   $(warning  To change this set LOCAL_ARCH :=)
-  $(warning =====================================================================)
+  $(warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
   LOCAL_ARCH := arm
 endif
 
@@ -83,7 +83,24 @@ FORCE_DISABLE_DEBUGGING := true
 ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
   ifeq ($(strip $(LOCAL_ARCH)),arm)
 
+    ifneq (,$(filter 5.% 6.%,$(TARGET_SM_AND)))
+      ifndef TARGET_SECOND_SM_AND
+
+        # Needs required 4.9 toolchain libs for hybrid gcc mode.
+        TARGET_SECOND_SM_AND := 4.9
+      endif
+      ifndef TARGET_NDK_VERSION
+
+        # Default to GCC 4.9 version for the NDK libs and includes.
+        TARGET_NDK_VERSION := 4.9
+      endif
+    endif
+
+    ifeq (,$(filter 5.% 6.%,$(TARGET_SM_AND)))
 export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib
+    else
+export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)/lib:$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SECOND_SM_AND)/lib
+    endif
 
     # Path to ROM toolchain
     SM_AND_PATH := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-$(HOST_OS)-androideabi-$(TARGET_SM_AND)
@@ -438,7 +455,8 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
         libstagefright_mp3dec \
         libstagefright_m4vh263dec \
         libstagefright_m4vh263enc \
-        libwebrtc_apm
+        libwebrtc_apm \
+        busybox
     endif
 
     # Check if there's already something set somewhere.
