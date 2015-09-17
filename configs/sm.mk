@@ -256,10 +256,7 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
         libaudioresampler \
         libart-disassembler \
         oatdump \
-        patchoat \
-        libwebviewchromium \
-        libwebviewchromium_plat_support \
-        libwebviewchromium_loader
+        patchoat
       ifndef GCC_4_9_MODULES
         GCC_4_9_MODULES := $(GCC_4_9_MODULES_BASE)
       else
@@ -749,7 +746,7 @@ else
 endif
 
 # Some flags are only available for certain gcc versions
-export DISABLE_SANITIZE_LEAK := $(filter 4.8%,$(SM_AND))
+export DISABLE_SANITIZE_LEAK := $(filter 4.8%,$(SM_AND_NAME))
 
 OPT3 := [extra]
 OPT6 := [mem-sanitizer]
