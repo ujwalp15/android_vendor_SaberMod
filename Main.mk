@@ -41,4 +41,3 @@ $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 ifeq ($(strip $(TARGET_BASE_ROM)),aosp)
   include $(SM_VENDOR)/prebuilts/SuperSU/supersu.mk
 endif
-  
