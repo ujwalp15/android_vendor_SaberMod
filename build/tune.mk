@@ -61,5 +61,14 @@ ifneq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
    endif
   endif
 endif
-#####
 
+ifeq (true,$(strip $(LOCAL_IS_HOST_MODULE)))
+  ifdef LOCAL_CFLAGS
+    LOCAL_CFLAGS += -march=native \
+      -mtune=native
+  else
+    LOCAL_CFLAGS := -march=native \
+      -mtune=native
+  endif
+endif
+#####
