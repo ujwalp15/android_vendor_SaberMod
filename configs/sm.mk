@@ -221,12 +221,9 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
       endif
  export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-eabi-$(TARGET_SM_KERNEL)/lib:$(TARGET_ARCH_LIB_PATH)
     endif
-    ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
-      export ENABLE_GCC_DEFAULTS := true
-      USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
-      OPT8 := [gcc-defaults]
-    else
-      # Disable Certain modules for CPU Tuning.
+
+    # GCC Defaults or CPU Tuning.
+    ifneq ($(ENABLE_GCC_DEFAULTS),true)
       LOCAL_DISABLE_TUNE := \
 	libc_dns \
 	libc_tzcode \
@@ -236,6 +233,10 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
 	libwebviewchromium_plat_support \
 	$(NO_OPTIMIZATIONS)
       OPT8 := [cpu-tune]
+    else
+      export ENABLE_GCC_DEFAULTS := true
+      USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
+      OPT8 := [gcc-defaults]
     endif
 
     # GCC hybrid mode.
