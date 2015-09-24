@@ -47,6 +47,22 @@ ifeq ($(strip $(LOCAL_O3)),true)
   endif
 endif
 
+# Dead code removal with IPA
+ifeq (,$(filter true,$(LOCAL_CLANG)))
+  ifneq (1,$(words $(filter $(LOCAL_DISABLE_IPA),$(LOCAL_MODULE))))
+    ifdef LOCAL_CFLAGS
+      LOCAL_CFLAGS += -fipa-sra
+    else
+      LOCAL_CFLAGS := -fipa-sra
+    endif
+    ifdef LOCAL_LDFLAGS
+      LOCAL_LDFLAGS += -fipa-sra
+    else
+      LOCAL_LDFLAGS := -fipa-sra
+    endif
+  endif
+endif
+
 # Do not use graphite on host modules or the clang compiler.
 ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
 
