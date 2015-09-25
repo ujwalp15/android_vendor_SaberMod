@@ -47,18 +47,18 @@ ifeq ($(strip $(LOCAL_O3)),true)
   endif
 endif
 
-# Dead code removal with IPA
+# IPA Analyser Optimizations
 ifeq (,$(filter true,$(LOCAL_CLANG)))
   ifneq (1,$(words $(filter $(LOCAL_DISABLE_IPA),$(LOCAL_MODULE))))
     ifdef LOCAL_CFLAGS
-      LOCAL_CFLAGS += -fipa-sra
+      LOCAL_CFLAGS += -fipa-sra -fipa-pta -fipa-cp -fipa-cp-clone
     else
-      LOCAL_CFLAGS := -fipa-sra
+      LOCAL_CFLAGS := -fipa-sra -fipa-pta -fipa-cp -fipa-cp-clone
     endif
     ifdef LOCAL_LDFLAGS
-      LOCAL_LDFLAGS += -fipa-sra
+      LOCAL_LDFLAGS += -fipa-sra -fipa-pta -fipa-cp -fipa-cp-clone
     else
-      LOCAL_LDFLAGS := -fipa-sra
+      LOCAL_LDFLAGS := -fipa-sra -fipa-pta -fipa-cp -fipa-cp-clone
     endif
   endif
 endif
