@@ -28,6 +28,38 @@ ifdef KERNEL_DIR
   include $(KERNEL_DIR)/AndroidKernel.mk
 endif
 
+ifneq ($(filter %trltetmo %trltespr %trltexx %trlteusc %trltevzw,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/samsung/trlte
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter slimremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := apq8084_sec_defconfig
+  endif
+endif
+
+ifneq ($(filter %trltetmo %trltespr %trltexx %trlteusc %trltevzw,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/samsung/trlte
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := apq8084_sec_defconfig
+  endif
+endif
+
+ifneq ($(filter %sprout4,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/mediatek/sprout
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := cyanogenmod_sprout_defconfig
+  endif
+endif
+
+ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/oneplus/msm8974
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := cyanogenmod_bacon_defconfig
+  endif
+endif
+
 # cp will do.
 .PHONY: $(PRODUCT_OUT)/kernel
 $(PRODUCT_OUT)/kernel: $(TARGET_PREBUILT_KERNEL)

@@ -34,7 +34,6 @@ include $(SM_VENDOR)/device/sm_devices.mk
 include $(SM_VENDOR)/configs/sm.mk
 
 # SuperSU for aosp based ROMs.
-ifeq ($(strip $(TARGET_BASE_ROM)),aosp)
-  include $(SM_VENDOR)/prebuilts/SuperSU/supersu.mk
-endif
-  
+#ifeq ($(strip $(TARGET_BASE_ROM)),aosp)
+#  include $(SM_VENDOR)/prebuilts/SuperSU/supersu.mk
+#endif

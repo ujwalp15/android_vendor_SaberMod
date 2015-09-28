@@ -38,6 +38,16 @@ ifneq ($(filter pa%,$(TARGET_PRODUCT)),)
   NO_OTA_BUILD := true
 endif
 
+ifneq ($(filter slimremix%,$(TARGET_PRODUCT)),)
+  TARGET_BASE_ROM := slimremix
+  include $(SM_VENDOR)/product/slimremix_product.mk
+endif
+
+ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
+  TARGET_BASE_ROM := cmremix
+  include $(SM_VENDOR)/product/cmremix_product.mk
+endif
+
 # General ROM strings
 
 # -O3 disabled by default.  To enable it change here to := true,
