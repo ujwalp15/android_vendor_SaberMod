@@ -363,7 +363,8 @@ export GRAPHITE_UNROLL_AND_JAM_KERNEL := $(filter 5.% 6.%,$(SM_KERNEL_NAME))
         -ftree-loop-linear \
         -floop-interchange \
         -floop-strip-mine \
-        -floop-block
+        -floop-block \
+        -floop-nest-optimize
       ifneq ($(GRAPHITE_UNROLL_AND_JAM_KERNEL),)
         BASE_GRAPHITE_KERNEL_FLAGS += \
           -floop-unroll-and-jam
@@ -444,6 +445,7 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
         libFraunhoferAAC \
         libinput \
         libmedia \
+        libncurses \
 	$(NO_OPTIMIZATIONS)
     endif
 
@@ -549,29 +551,47 @@ ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     libjavacore \
     libstagefright_avcenc \
     libRSDriver \
+    libminivold \
+    libsdcard \
+    libvold \
+    gatt_testtool \
+    su \
+    libqsap_sdk \
     libc_malloc \
     libRSSupport \
     libstlport \
-    libandroid_runtime \
-    libcrypto \
-    libwnndict \
-    libmedia \
+    libstlport_static \
+    libcrypto_static \
     dnsmasq \
+    libmedia \
     ping \
-    ping6 \
     libaudioflinger \
     libmediaplayerservice \
     libstagefright \
+    libssh \
     libvariablespeed \
+    libsurfaceflinger \
+    libstagefright_amrnbdec \
     librtp_jni \
+    libOmxVenc \
     libwilhelm \
-    libdownmix \
     libldnhncr \
+    libdownmix \
     libqcomvisualizer \
     libvisualizer \
-    libandroidfw \
-    libstlport_static \
+    lsof \
+    libcrypto \
+    ping6 \
+    ssh \
     tcpdump \
+    libfuse \
+    libbusybox \
+    libziparchive-host \
+    mdnsd \
+    libuclibcrpc \
+    busybox \
+    libfdlibm \
+    libcurl \
     $(NO_OPTIMIZATIONS)
 
   # Check if there's already something somewhere.

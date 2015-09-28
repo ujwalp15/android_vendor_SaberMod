@@ -38,6 +38,6 @@ PRODUCT_PACKAGES += SaberFox
 $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 
 # SuperSU for aosp based ROMs.
-ifeq ($(strip $(TARGET_BASE_ROM)),aosp)
-  include $(SM_VENDOR)/prebuilts/SuperSU/supersu.mk
-endif
+#ifeq ($(strip $(TARGET_BASE_ROM)),aosp)
+#  include $(SM_VENDOR)/prebuilts/SuperSU/supersu.mk
+#endif
