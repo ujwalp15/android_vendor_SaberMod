@@ -14,6 +14,30 @@
 #
 
 # Filter device
+ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := flounder
+endif
+
+ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := hammerhead
+endif
+
+ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := mako
+endif
+
+ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := shamu
+endif
+
+ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := bacon
+endif
+
+ifneq ($(filter %baconcaf,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := baconcaf
+endif
+
 ifneq ($(filter %z3,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := z3
 endif

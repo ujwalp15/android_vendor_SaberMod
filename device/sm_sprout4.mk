@@ -13,17 +13,6 @@
 # limitations under the License.
 #
 #
-
-# Find host os
-UNAME := $(shell uname -s)
-
-ifeq ($(strip $(UNAME)),Linux)
-  HOST_OS := linux
-endif
-
-# Only use these compilers on linux host.
-ifeq ($(strip $(HOST_OS)),linux)
-
   # Sabermod configs
   TARGET_ARCH := arm
   TARGET_SM_AND := 4.9
@@ -45,7 +34,6 @@ GRAPHITE_KERNEL_FLAGS := \
     -floop-nest-optimize \
     -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
-endif
 
 # Extra SaberMod GCC C flags for arch target and Kernel
 EXTRA_SABERMOD_GCC_VECTORIZE := \

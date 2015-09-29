@@ -12,6 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+ifneq ($(filter flounder,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_flounder.mk
+  LOCAL_ARCH := arm64
+endif
+
+ifneq ($(filter hammerhead,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_hammerhead.mk
+  LOCAL_ARCH := arm
+endif
+
+ifneq ($(filter mako,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_mako.mk
+  LOCAL_ARCH := arm
+endif
+
+ifneq ($(filter shamu,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_shamu.mk
+  LOCAL_ARCH := arm
+endif
+
+ifneq ($(filter bacon,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_bacon.mk
+  LOCAL_ARCH := arm
+endif
+
+ifneq ($(filter baconcaf,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_bacon.mk
+  LOCAL_ARCH := arm
+endif
 
 ifneq ($(filter awifi,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_awifi.mk
@@ -66,36 +95,26 @@ endif
 ifneq ($(filter %trltexx,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_trltexx.mk
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %trltevzw,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_trltevzw.mk
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %falcon,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_falcon.mk
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %jflteusc,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_jflteusc.mk
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 ifneq ($(filter %sprout4,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_sprout4.mk
   LOCAL_ARCH := arm
-  PRODUCT_PACKAGES += FireFox-arm-SM4.9
-  $(call inherit-product, $(SM_VENDOR)/prebuilts/system/lib/armeabi-v7a/arm.mk)
 endif
 
 # Kernel binary prefix.  The other part of this will go in the kernel source's AndroidKernel.mk.
