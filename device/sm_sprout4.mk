@@ -22,8 +22,7 @@
   CLANG_QCOM_COMPILE_ART := false
   CLANG_QCOM_COMPILE_BIONIC := false
   CLANG_QCOM_COMPILE_MIXED := false
-  PRODUCT_THREADS := $(SPROUT4_THREADS)
-  LOCAL_STRICT_ALIASING := true
+  LOCAL_STRICT_ALIASING := false
   LOCAL_O3 := true
   export ENABLE_PTHREAD := false
   LOCAL_LTO := true
@@ -32,7 +31,6 @@
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
     -floop-nest-optimize \
-    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
     -fopenmp
 
 # Extra SaberMod GCC C flags for arch target and Kernel
