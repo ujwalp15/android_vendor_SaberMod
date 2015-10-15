@@ -46,6 +46,10 @@ ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := awifi
 endif
 
+ifneq ($(filter %huashan,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := huashan
+endif
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted% rnx%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
