@@ -15,13 +15,26 @@
 
 # Sabermod configs
 TARGET_SM_KERNEL := 4.9
-BACON_THREADS := 4
+BACON_THREADS := 2
 PRODUCT_THREADS := $(BACON_THREADS)
 LOCAL_STRICT_ALIASING := false
 export LOCAL_O3 := true
 
-GRAPHITE_KERNEL_FLAGS := \
-  -fopenmp
+LOCAL_DISABLE_STRICT_ALIASING := \
+	libcrypto_static \
+	gatt_testtool \
+	libssh \
+	ssh \
+	libsurfaceflinger \
+	libOmxVenc \
+	lsof
+
+LOCAL_DISABLE_GRAPHITE := libncurses
+
+  GRAPHITE_KERNEL_FLAGS := \
+    -floop-parallelize-all \
+    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
+    -fopenmp
 
 # General flags for gcc 4.9 to allow compilation to complete.
 MAYBE_UNINITIALIZED := \
