@@ -81,7 +81,7 @@ ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
 endif
 
 ifneq ($(filter %huashan,$(TARGET_PRODUCT)),)
-  KERNEL_DIR := kernel/sony/msm8x60
+  KERNEL_DIR := kernel/sony/msm8960t
   KERNEL_BINARY_IMAGE := zImage-dtb
   ifneq ($(filter cmremix%,$(TARGET_PRODUCT)),)
     KERNEL_DEFCONFIG := cyanogenmod_huashan_defconfig

@@ -16,7 +16,7 @@
 # Sabermod configs
 TARGET_SM_KERNEL := 4.9
 BACON_THREADS := 2
-PRODUCT_THREADS := $(BACON_THREADS)
+PRODUCT_THREADS := $(HUASHAN_THREADS)
 LOCAL_STRICT_ALIASING := false
 export LOCAL_O3 := true
 
@@ -37,8 +37,7 @@ LOCAL_DISABLE_GRAPHITE := libncurses
     -fopenmp
 
 # General flags for gcc 4.9 to allow compilation to complete.
-MAYBE_UNINITIALIZED := \
-  hwcomposer.msm8960
+NO_OPTIMIZATIONS := hwcomposer.msm8960t
 
 # Extra SaberMod GCC C flags for arch target and Kernel
 EXTRA_SABERMOD_GCC_VECTORIZE := \
