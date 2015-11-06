@@ -94,5 +94,5 @@ ifneq ($(filter %togari,$(TARGET_PRODUCT)),)
 endif
 
 ifneq ($(filter %huashan,$(TARGET_PRODUCT)),)
-  $(shell unset CONFIG_MACH_MSM8960_RHINE_STRICT_ALIASING)
+  $(shell unset CONFIG_MACH_MSM8960t_RHINE_STRICT_ALIASING)
 endif
